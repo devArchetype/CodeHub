@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Marcu/Documents/CodeHub/CodeHub/CodeHub/src/Controllers/Controller.java</file>
-            <file>file:/C:/Users/Marcu/Documents/CodeHub/CodeHub/CodeHub/src/Main.java</file>
-            <file>file:/C:/Users/Marcu/Documents/CodeHub/CodeHub/CodeHub/src/Models/BancoDados.java</file>
-            <file>file:/C:/Users/Marcu/Documents/CodeHub/CodeHub/CodeHub/src/Views/VIEWZAO.java</file>
+            <file>file:/C:/Users/Riquelme/Documents/Programação/JAVA/CodeHub/src/Main.java</file>
+            <file>file:/C:/Users/Riquelme/Documents/Programação/JAVA/CodeHub/src/models/Usuario.java</file>
+            <file>file:/C:/Users/Riquelme/Documents/Programação/JAVA/CodeHub/src/controllers/UsuarioController.java</file>
+            <file>file:/C:/Users/Riquelme/Documents/Programação/JAVA/CodeHub/src/bancodados/BancoDados.java</file>
         </group>
     </open-files>
 </project-private>
