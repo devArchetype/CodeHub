@@ -9,8 +9,11 @@ import models.Usuario;
 
 public class BancoDados {
 
+    //referencia do BD
     private static final File BANCO_DADOS = iniciarBancoDados();
-    private static final File TABELA_USURIO = new File(BANCO_DADOS.getAbsolutePath() +
+    
+    //referencia das eventuais "tabelas"
+    private static final File TABELA_USUARIO = new File(BANCO_DADOS.getAbsolutePath() +
             Arquivo.resolverPath() + "usuarios");
 
     private static File iniciarBancoDados() {
@@ -26,11 +29,11 @@ public class BancoDados {
     }
 
     public static boolean registrarUsuario(Usuario user) {
-        if (!TABELA_USURIO.exists()) {
-            TABELA_USURIO.mkdir();
+        if (!TABELA_USUARIO.exists()) {
+            TABELA_USUARIO.mkdir();
         }
         
-        File registroUsuario = new File(TABELA_USURIO.getAbsoluteFile() + 
+        File registroUsuario = new File(TABELA_USUARIO.getAbsoluteFile() + 
                 Arquivo.resolverPath() + user.getEmail() + ".json");
 
         try {

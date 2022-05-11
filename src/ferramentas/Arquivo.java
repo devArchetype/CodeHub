@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Arquivo {
+    
+    private static final Gson GSON = new Gson(); //objeto com funcionalidades para arquivos json
 
     //identifica o SO, retornando a estrutura adequada do path
     public static String resolverPath() {
@@ -20,8 +22,7 @@ public class Arquivo {
     }
 
     public static boolean escreverJson(File arquivo, Object objeto) {
-        Gson gson = new Gson(); //objeto com funcionalidades para arquivos json
-        String json = gson.toJson(objeto); //conversao de um objeto java para json
+        String json = GSON.toJson(objeto); //conversao de um objeto java para json
 
         try {
             FileWriter gravacaoArquivo = new FileWriter(arquivo.getAbsolutePath());

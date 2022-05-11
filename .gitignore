@@ -1,2 +1,8 @@
+#netbeans
 /build/
 /dist/
+
+#Intellij
+/out/
+*.idea
+*.iml
