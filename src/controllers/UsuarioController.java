@@ -2,10 +2,11 @@ package controllers;
 
 import ferramentas.Validacao;
 import models.Usuario;
+import views.UsuarioView;
 
 public class UsuarioController {
-
     public static void registrarUsuario() {
+        
         String nomeUsuario = Validacao.entradaNome();
         String email = Validacao.entradaEmail(false);
         String senha = Validacao.entradaSenha(false);
@@ -18,5 +19,8 @@ public class UsuarioController {
             System.out.println("\nEmail já cadastrado!");
         }
     }
-
+    
+    public static void chamarAjuda(){
+        UsuarioView.imprimirComandos();
+    }
 }

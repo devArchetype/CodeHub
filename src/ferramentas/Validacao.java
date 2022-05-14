@@ -73,13 +73,10 @@ public class Validacao {
             
             if(login) System.exit(0); //verificacao de comportamento
             
-            System.out.println("""
-                    Deve conter ao menos 8 dígitos
-                    Deve conter ao menos uma letra maiúscula
-                    Deve conter ao menos uma letra minúscula
-                    Deve conter ao menos um caractere especial
-                                        
-                    """);
+            System.out.println("Deve conter ao menos 8 dígitos" +
+                    "\nDeve conter ao menos uma letra maiúscula" +
+                    "\nDeve conter ao menos uma letra minúscula" +
+                    "\nDeve conter ao menos um caractere especial");                          
             
             return entradaSenha(false);
         }
