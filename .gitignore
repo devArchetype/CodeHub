@@ -1,0 +1,11 @@
+#netbeans
+/build/
+/dist/
+/nbproject/
+*.mf
+
+#intellij
+/out/
+*.idea
+*.iml
+*.xml
