@@ -76,7 +76,7 @@ public class UsuarioController {
                 Preferences.userRoot().put("emailUser", "");  // como o user está logado, para remover, adiciona vazio
                 Preferences.userRoot().put("passUser", ""); // como o user está logado, para remover, adiciona vazio
 
-                // exibição para o usuário:
+                // exibição para o usuário no terminal:
                 System.out.println("Sessão encerrada!");
                 System.out.println("Volte em breve☺!");
                 //Logger.getLogger("CodeHubAutenticationLog").log(Level.INFO,emailCookie + " desconectou-se do GitHub em " + new Date().toString());
