@@ -79,6 +79,7 @@ public class UsuarioController {
                 // exibição para o usuário no terminal:
                 System.out.println("Sessão encerrada!");
                 System.out.println("Volte em breve☺!");
+                System.exit(0);
                 //Logger.getLogger("CodeHubAutenticationLog").log(Level.INFO,emailCookie + " desconectou-se do GitHub em " + new Date().toString());
             }
         }else System.out.println("Você deve efetuar o acesso para poder sair de uma conta!");
