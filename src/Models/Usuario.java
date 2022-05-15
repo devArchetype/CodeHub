@@ -20,9 +20,11 @@ public class Usuario {
     public boolean registrar() {
         return BancoDados.registrarUsuario(this);
     }
+
      public boolean validarAcesso(){
         return BancoDados.validaUsuario(this);
     }
+
     public String getNome() {
         return nome;
     }

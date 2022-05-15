@@ -1,6 +1,6 @@
 package bancodados;
 
-import ferramentas.Arquivo;
+import ferramentas.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

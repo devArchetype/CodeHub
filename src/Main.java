@@ -1,4 +1,4 @@
-import controllers.UsuarioController;
+import Controllers.UsuarioController;
 /**
  *
  * @author CODEHUB
@@ -6,6 +6,8 @@ import controllers.UsuarioController;
 public class Main {
     public static void main(String[] args) {
          //UsuarioController.registrarUsuario(); //teste da funcionalidade
-         UsuarioController.acessaConta(); //teste de funcionalidade
+        //UsuarioController.acessaConta(); //teste de funcionalidade
+        UsuarioController.sairConta();
+
     }
 }
