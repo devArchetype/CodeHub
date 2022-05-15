@@ -64,7 +64,7 @@ public class Validacao {
         }
         
         //regex para o formato valido da senha
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$";
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#!])[0-9a-zA-Z$*&@#!]{8,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(senha);
 
@@ -73,10 +73,7 @@ public class Validacao {
             
             if(login) System.exit(0); //verificacao de comportamento
             
-            System.out.println("Deve conter ao menos 8 dígitos" +
-                    "\nDeve conter ao menos uma letra maiúscula" +
-                    "\nDeve conter ao menos uma letra minúscula" +
-                    "\nDeve conter ao menos um caractere especial");                          
+            System.out.println("Deve conter ao menos 8 dígitos\nDeve conter ao menos uma letra maiúscula\nDeve conter ao menos uma letra minúscula\nDeve conter ao menos um caractere especial                                                        ");
             
             return entradaSenha(false);
         }

@@ -3,8 +3,10 @@ package ferramentas;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import models.Usuario;
 
 public class Arquivo {
     
@@ -33,5 +35,12 @@ public class Arquivo {
         }
 
         return true;
+    }
+    public static String recuperaSenha(FileReader arquivo){
+        String senha = "";
+        Gson gson = new Gson();
+        Usuario user =  gson.fromJson(arquivo, Usuario.class);
+        senha = user.getSenha();
+        return senha;
     }
 }

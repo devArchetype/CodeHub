@@ -6,6 +6,9 @@ import controllers.UsuarioController;
 public class Main {
     public static void main(String[] args) {
         UsuarioController.chamarAjuda();
+        UsuarioController.registrarUsuario();
+        UsuarioController.acessaConta();
+        UsuarioController.sairConta();
     }
     
 //    public static void main(String[] args){
