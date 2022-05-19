@@ -35,7 +35,8 @@ public class Validacao {
         String regex = "^[a-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-        
+
+        //verifica se condiz com a regex definida
         if (!matcher.matches()) {
             System.out.println("\nEmail invalido!");
             
@@ -68,6 +69,7 @@ public class Validacao {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(senha);
 
+        //verifica se condiz com a regex definida
         if (!matcher.matches()) {
             System.out.println("\nSenha invalida!");
             
@@ -83,4 +85,5 @@ public class Validacao {
 
         return senha;
     }
+
 }

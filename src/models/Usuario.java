@@ -23,8 +23,8 @@ public class Usuario {
         this.senha = senha;
     }
     
-    public boolean registrar() {
-        return BancoDados.registrarUsuario(this);
+    public boolean registraDados() {
+        return BancoDados.registraUsuario(this);
     }
 
     public boolean validarAcesso(){

@@ -16,7 +16,7 @@ public class UsuarioController {
         this.usuarioView = new UsuarioView();
     }
 
-    public void registrarUsuario() {
+    public void registraUsuario() {
         String nomeUsuario = Validacao.entradaNome();
         String email = Validacao.entradaEmail(false);
         String senha = Validacao.entradaSenha(false);
@@ -25,7 +25,7 @@ public class UsuarioController {
         this.usuario.setEmail(email);
         this.usuario.setSenha(senha);
 
-        if (usuario.registrar()) {
+        if (usuario.registraDados()) {
             System.out.println("\nConta cadastrada com sucesso!");
         } else {
             System.out.println("\nEmail ja cadastrado!");
@@ -69,8 +69,8 @@ public class UsuarioController {
 
     public void sairConta() {
         /*
-            Faz logout do acesso criado cookie do método acima
-         */
+           Faz logout do acesso criado cookie do método acima
+        */
         String emailCookie = Preferences.userRoot().get("emailUser", ""); // pega o email no cookie
         if (!emailCookie.equals("")) { // se o email não estiver vazio, há alguem logado.
             String senhaCookie = Preferences.userRoot().get("passUser", ""); // verifica a senha também
@@ -94,6 +94,12 @@ public class UsuarioController {
 
     public void chamarAjuda() {
         this.usuarioView.imprimirComandos();
+    }
+
+    //verificacao de login meramente criada pra testes, para ser usado no Main, como uma verificacao geral
+    public boolean estaLogado() {
+        String emailCookie = Preferences.userRoot().get("emailUser", "");
+        return !emailCookie.equals("");
     }
 
 }
