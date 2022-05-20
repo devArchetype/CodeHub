@@ -41,6 +41,9 @@ public class Main {
                     case "--registrar", "--acessar" ->  {
                         System.out.println("Usuario logado!");
                     }
+                    case "--versionar" -> {
+                        repositorioController.versionar(args[1]);
+                    }
                 }
             } else {
                 switch (args[0]) {

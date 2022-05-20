@@ -1,15 +1,18 @@
 package controllers;
 
 import bancodados.BancoDados;
+import com.google.gson.Gson;
 import ferramentas.Arquivo;
 import models.Repositorio;
 import models.Usuario;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.prefs.Preferences;
 
 public class RepositorioController {
@@ -87,7 +90,7 @@ public class RepositorioController {
                    container.add(arquivoVerificar.getAbsolutePath());
                } else if (arquivoVerificar.getName().equals(arquivoAdicionar)) {
                    //existe, então, adicione ele ao ArrayList do container.json e pare por aqui
-                   container.add(arquivoVerificar.getAbsolutePath());
+                   container.add(arquivoVerificar.getAbsolutePath() + ",");  // para separar por v´rgulas
                    break;
                }
            }
@@ -95,6 +98,78 @@ public class RepositorioController {
 
         //escrevendo o objeto ArrayList<String> no container.json, agora com novos arquivos adicionados ou nao
         Arquivo.escreveJson(arquivoContainerJson, container);
+    }
+
+    public void versionar(String descricao){
+        /*
+        Cria e confirma (commit) uma nova versão
+        parametros: descrição (String) - identificação textual
+        retorn: void
+        */
+        // lista diretório de versões para identificar se o arquivo já existe:
+        String caminhoParaPastaContainer = this.repositorio.getPath() + Arquivo.resolvePath() + "container";
+        File containerFiles = new File(caminhoParaPastaContainer);
+        threadVersionar(Arrays.toString(containerFiles.listFiles()), descricao);
+    }
+    private void threadVersionar(String caminhos, String comentario){
+        // cria threads para executar as funções do versionar
+        String repositorio = this.repositorio.getPath();
+        new Thread(){
+         @Override
+            public void run(){
+             //seleciona o repositorio onde o usuario chamou o método iniciar()
+             File pastaCodeHub = new File(repositorio);
+
+             try {
+                 String hash = geraHashDaVersao();
+                 // acessa a pasta:
+                 File pastaVersoes = new File(pastaCodeHub.getAbsolutePath() + Arquivo.resolvePath() + "versoes");
+                 // se tiver conteúdo, não permite o versionamento:
+                 if(pastaVersoes.listFiles().length > 0){
+                     System.out.println("Existem arquivos já versionados\nNada foi alterado.");
+                 }else{
+                     String jsonVersoes = "[versao:" + hash + ",usuario:" +
+                             Preferences.userRoot().get("emailUser", "") + ", comentario:" + comentario + ","
+                             + "itens_adicionados: ";
+
+                     // conversão para json
+                     String[] paths = caminhos.replace("[", "").replace("]", "").split(",");
+                     for(String caminho: paths){
+                         jsonVersoes += caminho + ", ";
+                     }
+                     jsonVersoes += "]";
+                     String obj = new Gson().toJson(jsonVersoes);
+                    // cria o arquivo com o json
+                     File versao = new File(pastaVersoes + Arquivo.resolvePath() + hash + ".json");
+                     // analisa se , por acaso , não existe (BEM IMPROVAVEL):
+                     if(!versao.exists()) versao.createNewFile();
+                     FileWriter escrevedorArquivo = new FileWriter(versao, true);
+                     escrevedorArquivo.write(obj); // escreve o json
+                     escrevedorArquivo.close();
+                 }
+
+             }catch (Exception e){
+                 System.out.println("Erro ao gerar hash da versão!");
+             }
+         }
+        }.start();
+    }
+
+    private String geraHashDaVersao() throws NoSuchAlgorithmException {
+        // gera hash com base em letras do alfabeto
+        int index;
+        String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder constroe = new StringBuilder(1016);
+
+        for (int m = 0; m < 16; m++) {
+            index = (int)(alpha.length() * Math.random());
+            constroe.append(alpha.charAt(index));
+        }
+        // palavra aleatoria gerada pelos métodos acima:
+        String word = constroe.toString(); // palavra a ser transformada em hash
+        MessageDigest mensagem = MessageDigest.getInstance("MD5"); // criptografia do tipo md5, mais básicona msm
+        BigInteger hash = new BigInteger(1, mensagem.digest(word.getBytes(StandardCharsets.UTF_8)));
+        return hash.toString();  // retorna o hash numérico como texto
     }
 
 }
