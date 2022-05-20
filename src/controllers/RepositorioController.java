@@ -111,6 +111,7 @@ public class RepositorioController {
         File containerFiles = new File(caminhoParaPastaContainer);
         threadVersionar(Arrays.toString(containerFiles.listFiles()), descricao);
     }
+
     private void threadVersionar(String caminhos, String comentario){
         // cria threads para executar as funções do versionar
         String repositorio = this.repositorio.getPath();
@@ -125,18 +126,15 @@ public class RepositorioController {
                  // acessa a pasta:
                  File pastaVersoes = new File(pastaCodeHub.getAbsolutePath() + Arquivo.resolvePath() + "versoes");
                  // se tiver conteúdo, não permite o versionamento:
-                 if(pastaVersoes.listFiles().length > 0){
-                     System.out.println("Existem arquivos já versionados\nNada foi alterado.");
-                 }else{
+                 if(pastaVersoes.listFiles().length > 0)  System.out.println("Existem arquivos já versionados\nNada foi alterado.");
+                 else{
                      String jsonVersoes = "[versao:" + hash + ",usuario:" +
                              Preferences.userRoot().get("emailUser", "") + ", comentario:" + comentario + ","
                              + "itens_adicionados: ";
 
                      // conversão para json
                      String[] paths = caminhos.replace("[", "").replace("]", "").split(",");
-                     for(String caminho: paths){
-                         jsonVersoes += caminho + ", ";
-                     }
+                     for(String caminho: paths) jsonVersoes += caminho + ", ";
                      jsonVersoes += "]";
                      String obj = new Gson().toJson(jsonVersoes);
                     // cria o arquivo com o json
@@ -148,9 +146,7 @@ public class RepositorioController {
                      escrevedorArquivo.close();
                  }
 
-             }catch (Exception e){
-                 System.out.println("Erro ao gerar hash da versão!");
-             }
+             }catch (Exception e) System.out.println("Erro ao gerar hash da versão!");
          }
         }.start();
     }
