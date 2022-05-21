@@ -60,9 +60,9 @@ public class UsuarioController {
             this.usuario.setSenha(senha);
 
             if(usuario.validarAcesso()){
-                System.out.println("Email e senha corretos, bem-vindo ao CodeHub");
+                System.out.println("Email e senha corretos, bem-vindo ao CodeHub!");
             } else {
-                System.out.println("Email ou senha incorretos, tente novamente");
+                System.out.println("Email ou senha incorretos, tente novamente!");
             }
         }
     }

@@ -96,5 +96,37 @@ public class RepositorioController {
         //escrevendo o objeto ArrayList<String> no container.json, agora com novos arquivos adicionados ou nao
         Arquivo.escreveJson(arquivoContainerJson, container);
     }
-
+    
+    public void removeDoContainer (String arquivoRemover) {
+        //seleciona o arquivo container.json e armazena em um objeto file criado
+        File arquivoContainerJson = new File(this.repositorio.getPath() + 
+                Arquivo.resolvePath()  + "container" + Arquivo.resolvePath() + "container.json");
+    
+        //objeto FileReader necessario para se fazer a leitura de um arquivo qualquer
+        FileReader containerLeitura = null;
+        try {
+            containerLeitura = new FileReader(arquivoContainerJson);
+        } catch (FileNotFoundException e) {
+            System.exit(0);
+        }
+        
+        //leitura do arquivo container.json, assim retornando um ArrayList<String> com todos os paths existentes nele
+        ArrayList<String> container = Arquivo.leContainerJson(containerLeitura);
+        
+        //percorre o array container que contem os paths
+        for (int i = 0; i < container.size(); i++){
+            String arquivoAtual = container.get(i); 
+            
+            //remove o arquivo que foi solicitado
+            if (arquivoAtual.endsWith(arquivoRemover)){
+                container.remove(i);
+                break;
+            }
+        }
+        
+        //reescreve o container com as devidas remocoes solicitadas pelo usuario
+        Arquivo.escreveJson(arquivoContainerJson, container);
+    }
+    
 }
+

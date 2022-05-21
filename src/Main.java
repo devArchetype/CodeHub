@@ -38,6 +38,9 @@ public class Main {
                     case  "--adicionar" -> {
                         repositorioController.adicionaAoContainer(args[1]);
                     }
+                    case "--remover" -> {
+                        repositorioController.removeDoContainer(args[1]);
+                    }
                     case "--registrar", "--acessar" ->  {
                         System.out.println("Usuario logado!");
                     }
