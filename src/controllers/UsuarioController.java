@@ -36,14 +36,12 @@ public class UsuarioController {
         //Verifica se ele estava logado antes com cookies
         //Se estiver vazio é a primeira vez depois de um tempo no sistema, então continua o código
         String emailCookie = Preferences.userRoot().get("emailUser", "");
-        System.out.println(emailCookie);
 
         if (!emailCookie.equals("")) {
             String senhaCookie = Preferences.userRoot().get("passUser", "");
 
             //Se não estiver vazio cria um objeto e verifica
             Usuario cookieUser = new Usuario(emailCookie, senhaCookie);
-            System.out.println(cookieUser.validarAcesso());
 
             if (!cookieUser.validarAcesso()) {
                 //Algo deu errado, limpando o cookie e pedindo para acessa denovo

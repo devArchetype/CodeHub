@@ -30,16 +30,12 @@ public class Arquivo {
     //escreve qualquer objeto Java em um json
     public static boolean escreveJson(File arquivoJson, Object objeto) {
         String objetoJson = GSON.toJson(objeto); //conversao de um objeto java para json
-
         try {
             //gravacao do objeto no json
             FileWriter gravacaoArquivo = new FileWriter(arquivoJson.getAbsolutePath());
             gravacaoArquivo.write(objetoJson);
             gravacaoArquivo.close();
-        } catch (IOException ex) {
-            return false;
-        }
-
+        } catch (IOException ex) {  return false; }
         return true;
     }
 

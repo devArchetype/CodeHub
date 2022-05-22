@@ -11,6 +11,7 @@ import java.util.prefs.Preferences;
 import ferramentas.*;
 import models.Repositorio;
 import models.Usuario;
+import models.Versao;
 
 public class BancoDados {
 
@@ -22,6 +23,13 @@ public class BancoDados {
             Arquivo.resolvePath() + "usuarios");
     private static final File TABELA_REPOSITORIO = new File(BANCO_DADOS.getAbsolutePath() +
             Arquivo.resolvePath() + "repositorios");
+
+    private static final File TABELA_VERSOES = new File(BANCO_DADOS.getAbsolutePath() +
+            Arquivo.resolvePath() + "versoes");
+
+    public File getTabelaVersoes(){
+        return TABELA_VERSOES;
+    }
 
     //inicia o fake banco de dados na home do usuario
     private static File iniciaBancoDados() {
@@ -118,13 +126,20 @@ public class BancoDados {
         if (!TABELA_REPOSITORIO.exists()) {
             TABELA_REPOSITORIO.mkdir();
         }
-
         //caminho do arquivo json a ser criado para o usuario
         File registroRepositorio = new File(TABELA_REPOSITORIO.getAbsolutePath() +
                 Arquivo.resolvePath() + repositorio.getChavePrimaria() + ".json");
         //usa-se o atributo chavePrimaria como nome do arquivo json
 
         return registraOcorrencia(registroRepositorio, repositorio);
+    }
+
+    public static boolean registraVersao(Versao versao){
+        if(!TABELA_VERSOES.exists()) TABELA_VERSOES.mkdir();
+        // caminho para o json a ser criado:
+        File registraVersao = new File(TABELA_VERSOES.getAbsolutePath() + Arquivo.resolvePath() +
+                versao.getChavePrimaria() + ".json");
+        return registraOcorrencia(registraVersao, versao);
     }
 
 }

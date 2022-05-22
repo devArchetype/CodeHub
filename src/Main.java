@@ -1,5 +1,7 @@
 import controllers.RepositorioController;
 import controllers.UsuarioController;
+import controllers.VersaoController;
+
 /**
  *
  * @author CODEHUB
@@ -20,7 +22,7 @@ public class Main {
         //controllers
         UsuarioController usuarioController = new UsuarioController();
         RepositorioController repositorioController = new RepositorioController();
-
+        VersaoController versao = new VersaoController();
         //central de operacoes
         try {
             //verificacao de login meramente criada pra testes
@@ -42,7 +44,7 @@ public class Main {
                         System.out.println("Usuario logado!");
                     }
                     case "--versionar" -> {
-                        repositorioController.versionar(args[1]);
+                        versao.versiona(args[1]);
                     }
                 }
             } else {
