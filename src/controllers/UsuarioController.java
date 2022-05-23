@@ -26,9 +26,9 @@ public class UsuarioController {
         this.usuario.setSenha(senha);
 
         if (usuario.registraDados()) {
-            System.out.println("\nConta cadastrada com sucesso!");
+            System.out.println("\n" + Cores.getCor("verde") + "Conta cadastrada com sucesso!");
         } else {
-            System.out.println("\nEmail ja cadastrado!");
+            System.out.println("\n" + Cores.getCor("vermelho") +"Email ja cadastrado!");
         }
     }
 
@@ -59,9 +59,9 @@ public class UsuarioController {
             this.usuario.setSenha(senha);
 
             if (usuario.validarAcesso()) {
-                System.out.println("Email e senha corretos, bem-vindo ao CodeHub");
+                System.out.println(Cores.getCor("verde") + "Email e senha corretos, bem-vindo ao CodeHub");
             } else {
-                System.out.println("Email ou senha incorretos, tente novamente");
+                System.out.println(Cores.getCor("vermelho") + "Email ou senha incorretos, tente novamente");
             }
         }
     }
@@ -80,14 +80,13 @@ public class UsuarioController {
                 Preferences.userRoot().put("passUser", ""); // como o user está logado, para remover, adiciona vazio
 
                 // exibição para o usuário no terminal:
-                System.out.println("Sessao encerrada!");
-                System.out.println("Volte em breve!");
+                System.out.println(Cores.getCor("amarelo") + "Sessao encerrada! \n" + "Volte em breve!");
                 System.exit(0);
                 // Logger.getLogger("CodeHubAutenticationLog").log(Level.INFO,emailCookie + "
                 // desconectou-se do GitHub em " + new Date().toString());
             }
         } else {
-            System.out.println("Voce deve efetuar o acesso para poder sair de uma conta!");
+            System.out.println(Cores.getCor("vermelho") + "Voce deve efetuar o acesso para poder sair de uma conta!");
         }
 
     }

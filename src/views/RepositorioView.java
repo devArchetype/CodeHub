@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import bancodados.BancoDados;
 import ferramentas.Arquivo;
+import ferramentas.Cores;
 import models.Repositorio;
 import models.Usuario;
 import models.Versao;
@@ -74,11 +75,11 @@ public class RepositorioView {
       if (versao.getData().equals(data)) {
 
 				if(versao.getValorAtual()) {
-					indicadorVersaoAtual = " [Versao Atual]";
+					indicadorVersaoAtual = Cores.getCor("ciano") + " [Versao Atual]";
 				}
 
 				System.out.println(
-					"Versao: " + versao.getChavePrimaria() + indicadorVersaoAtual + "\n" +
+          Cores.getCor("amarelo") +	"Versao: " + versao.getChavePrimaria() + indicadorVersaoAtual + "\n" +
 					"Comentario: " + versao.getComentario() + "\n" +
 					"Autor: " + usuario.getNome() + " <" + usuario.getEmail() + ">" + "\n" +
 					"Data: " + versao.getData() + "\n"

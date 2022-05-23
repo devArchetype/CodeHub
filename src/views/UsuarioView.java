@@ -1,11 +1,14 @@
 package views;
 
+import ferramentas.Cores;
+
 public class UsuarioView {
 
     public void imprimirComandos() {
 
         // lista os comandos de ajuda
-        System.out.println("Precisa de ajuda? Podemos te ajudar! :) \n" + "\nLista de comandos disponiveis: \n");
+        System.out.println(Cores.getCor("amarelo") + "Precisa de ajuda? Podemos te ajudar! :) \n"
+                + "\nLista de comandos disponiveis: \n");
 
         // chamada de mensagens de ajuda
         System.out.println("--ajuda : exibe janela com todos os comandos\n");
