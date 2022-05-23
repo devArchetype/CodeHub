@@ -32,19 +32,20 @@ public class UsuarioController {
         }
     }
 
-    public void acessaConta(){
-        //Verifica se ele estava logado antes com cookies
-        //Se estiver vazio é a primeira vez depois de um tempo no sistema, então continua o código
+    public void acessaConta() {
+        // Verifica se ele estava logado antes com cookies
+        // Se estiver vazio é a primeira vez depois de um tempo no sistema, então
+        // continua o código
         String emailCookie = Preferences.userRoot().get("emailUser", "");
 
         if (!emailCookie.equals("")) {
             String senhaCookie = Preferences.userRoot().get("passUser", "");
 
-            //Se não estiver vazio cria um objeto e verifica
+            // Se não estiver vazio cria um objeto e verifica
             Usuario cookieUser = new Usuario(emailCookie, senhaCookie);
 
             if (!cookieUser.validarAcesso()) {
-                //Algo deu errado, limpando o cookie e pedindo para acessa denovo
+                // Algo deu errado, limpando o cookie e pedindo para acessa denovo
                 Preferences.userRoot().put("emailUser", "");
                 Preferences.userRoot().put("passUser", "");
                 acessaConta();
@@ -53,11 +54,11 @@ public class UsuarioController {
             String email = Validacao.entradaEmail(true);
             String senha = Validacao.entradaSenha(true);
 
-            //Verificação se a o usuario existe e se a senha bate
+            // Verificação se a o usuario existe e se a senha bate
             this.usuario.setEmail(email);
             this.usuario.setSenha(senha);
 
-            if(usuario.validarAcesso()){
+            if (usuario.validarAcesso()) {
                 System.out.println("Email e senha corretos, bem-vindo ao CodeHub");
             } else {
                 System.out.println("Email ou senha incorretos, tente novamente");
@@ -67,24 +68,25 @@ public class UsuarioController {
 
     public void sairConta() {
         /*
-           Faz logout do acesso criado cookie do método acima
-        */
+         * Faz logout do acesso criado cookie do método acima
+         */
         String emailCookie = Preferences.userRoot().get("emailUser", ""); // pega o email no cookie
         if (!emailCookie.equals("")) { // se o email não estiver vazio, há alguem logado.
             String senhaCookie = Preferences.userRoot().get("passUser", ""); // verifica a senha também
 
-            if(!senhaCookie.equals("")){
+            if (!senhaCookie.equals("")) {
                 // limpeza do cookie para efetivação do Log out
-                Preferences.userRoot().put("emailUser", "");  // como o user está logado, para remover, adiciona vazio
+                Preferences.userRoot().put("emailUser", ""); // como o user está logado, para remover, adiciona vazio
                 Preferences.userRoot().put("passUser", ""); // como o user está logado, para remover, adiciona vazio
 
                 // exibição para o usuário no terminal:
                 System.out.println("Sessao encerrada!");
                 System.out.println("Volte em breve!");
                 System.exit(0);
-                //Logger.getLogger("CodeHubAutenticationLog").log(Level.INFO,emailCookie + " desconectou-se do GitHub em " + new Date().toString());
+                // Logger.getLogger("CodeHubAutenticationLog").log(Level.INFO,emailCookie + "
+                // desconectou-se do GitHub em " + new Date().toString());
             }
-        } else  {
+        } else {
             System.out.println("Voce deve efetuar o acesso para poder sair de uma conta!");
         }
 
@@ -94,7 +96,8 @@ public class UsuarioController {
         this.usuarioView.imprimirComandos();
     }
 
-    //verificacao de login meramente criada pra testes, para ser usado no Main, como uma verificacao geral
+    // verificacao de login meramente criada pra testes, para ser usado no Main,
+    // como uma verificacao geral
     public boolean estaLogado() {
         String emailCookie = Preferences.userRoot().get("emailUser", "");
         return !emailCookie.equals("");

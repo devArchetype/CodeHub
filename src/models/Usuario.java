@@ -3,13 +3,13 @@ package models;
 import bancodados.BancoDados;
 
 public class Usuario {
-    
+
     private String nome;
     private String email;
     private String senha;
 
     public Usuario() {
-        //default
+        // default
     }
 
     public Usuario(String nome, String email, String senha) {
@@ -22,12 +22,12 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
     }
-    
+
     public boolean registraDados() {
         return BancoDados.registraUsuario(this);
     }
 
-    public boolean validarAcesso(){
+    public boolean validarAcesso() {
         return BancoDados.validaUsuario(this);
     }
 
@@ -54,5 +54,5 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
 }

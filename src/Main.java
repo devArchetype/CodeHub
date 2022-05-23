@@ -14,48 +14,51 @@ public class Main {
                 " | |      / _ \\   / _` |  / _ \\ | |_| | | | | | | '_ \\ \n" +
                 " | |___  | (_) | | (_| | |  __/ |  _  | | |_| | | |_) |\n" +
                 "  \\____|  \\___/   \\__,_|  \\___| |_| |_|  \\__,_| |_.__/ \n" +
-                "                                                     " ;
+                "                                                     ";
         System.out.println(ANSI_YELLOW + logo);
         System.out.println("\033[3m  Frase de  Efeito\033[0m");
         System.out.println(ANSI_YELLOW + "  Digite: 'CodeHub --ajuda' para listar todos os comandos\n");
 
-        //controllers
+        // controllers
         UsuarioController usuarioController = new UsuarioController();
         RepositorioController repositorioController = new RepositorioController();
-        VersaoController versao = new VersaoController();
-        //central de operacoes
+        VersaoController versaoController = new VersaoController();
+        // central de operacoes
         try {
-            //verificacao de login meramente criada pra testes
+            // verificacao de login meramente criada pra testes
             if (usuarioController.estaLogado()) {
                 switch (args[0]) {
-                    case "--ajudar" ->  {
+                    case "--ajudar" -> {
                         usuarioController.chamarAjuda();
                     }
-                    case  "--sair" -> {
+                    case "--sair" -> {
                         usuarioController.sairConta();
                     }
-                    case  "--iniciar" -> {
+                    case "--iniciar" -> {
                         repositorioController.iniciaRepositorio();
                     }
-                    case  "--adicionar" -> {
+                    case "--adicionar" -> {
                         repositorioController.adicionaAoContainer(args[1]);
                     }
-                    case "--registrar", "--acessar" ->  {
+                    case "--registrar", "--acessar" -> {
                         System.out.println("Usuario logado!");
                     }
                     case "--versionar" -> {
-                        versao.versiona(args[1]);
+                        versaoController.versiona(args[1]);
+                    }
+                    case "--historico" -> {
+                        repositorioController.listarHistorico();
                     }
                 }
             } else {
                 switch (args[0]) {
-                    case "--ajudar" ->  {
+                    case "--ajudar" -> {
                         usuarioController.chamarAjuda();
                     }
-                    case  "--registrar" -> {
+                    case "--registrar" -> {
                         usuarioController.registraUsuario();
                     }
-                    case  "--acessar" -> {
+                    case "--acessar" -> {
                         usuarioController.acessaConta();
                     }
                     default -> {
@@ -66,6 +69,6 @@ public class Main {
         } catch (ArrayIndexOutOfBoundsException e) {
             usuarioController.chamarAjuda();
         }
-    }
 
+    }
 }
