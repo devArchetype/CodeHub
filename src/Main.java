@@ -1,6 +1,7 @@
 import controllers.RepositorioController;
 import controllers.UsuarioController;
 import controllers.VersaoController;
+import views.RepositorioView;
 
 /**
  *
@@ -69,6 +70,8 @@ public class Main {
         } catch (ArrayIndexOutOfBoundsException e) {
             usuarioController.chamarAjuda();
         }
+
+        repositorioController.listarHistorico();
 
     }
 }

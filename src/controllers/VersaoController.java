@@ -77,6 +77,14 @@ public class VersaoController {
                 getVersao().setData(dataAtual());
                 getVersao().setVersao(hash);
                 getVersao().setComentario(comentario);
+
+                // Definindo versão como versão atual
+                getVersao().setVersaoAtual(true);
+
+                // Removendo atributo de versão atual da versão anterior(antes de salvar a nova
+                // versão no BD)
+                atualizaVersaoAtual();
+
                 // salva versão no banco de dados.
                 BancoDados.registraVersao(getVersao());
                 // define o path até o json no banco de dados
@@ -188,6 +196,30 @@ public class VersaoController {
         // fornece data e hora, formatadas, para inserção no log.
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         return dtf.format(LocalDateTime.now());
+    }
+
+    // Atualiza versao com atributo de versão atual
+    private void atualizaVersaoAtual() {
+        // Selecionando todas as versões do repositório atual
+        File[] arquivoChaveVersoes = pastaVersoes.listFiles();
+
+        for (File arquivo : arquivoChaveVersoes) {
+            String chaveArquivo = arquivo.getName();
+
+            Versao versao = BancoDados.consultaVersao(chaveArquivo);
+
+            // Se o atributo versaoAtual for true, troca para false e da um update no banco de dados
+            if (versao.getValorAtual()) {
+                versao.setVersaoAtual(false);
+
+                File caminhoVersao = new File(
+                        BancoDados.getTabelaVersoes() + Arquivo.resolvePath() + chaveArquivo + ".json");
+
+                // Fazendo update no BD
+                Arquivo.escreveJson(caminhoVersao, versao);
+                break;
+            }
+        }
     }
 
     /*

@@ -27,7 +27,7 @@ public class BancoDados {
     private static final File TABELA_VERSOES = new File(BANCO_DADOS.getAbsolutePath() +
             Arquivo.resolvePath() + "versoes");
 
-    public File getTabelaVersoes() {
+    public static File getTabelaVersoes() {
         return TABELA_VERSOES;
     }
 
@@ -154,5 +154,4 @@ public class BancoDados {
             return null;
         }
     }
-
 }

@@ -7,6 +7,7 @@ public class Versao {
     private String autor;
     private String data; // converter data para string
     private String comentario;
+    private boolean versaoAtual;
 
     // construtores
     public Versao() {
@@ -47,5 +48,13 @@ public class Versao {
 
     public String getData() {
         return data;
+    }
+
+    public void setVersaoAtual(boolean valor) {
+        this.versaoAtual = valor;
+    }
+
+    public boolean getValorAtual() {
+        return this.versaoAtual;
     }
 }
