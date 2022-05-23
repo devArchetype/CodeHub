@@ -1,8 +1,6 @@
 import controllers.RepositorioController;
 import controllers.UsuarioController;
 import controllers.VersaoController;
-import ferramentas.Cores;
-import views.RepositorioView;
 
 /**
  *
@@ -10,14 +8,14 @@ import views.RepositorioView;
  */
 public class Main {
     public static void main(String[] args) {
-        String logo = "  ____               _          _   _           _     \n" +
-                "  / ___|   ___     __| |   ___  | | | |  _   _  | |__  \n" +
-                " | |      / _ \\   / _` |  / _ \\ | |_| | | | | | | '_ \\ \n" +
-                " | |___  | (_) | | (_| | |  __/ |  _  | | |_| | | |_) |\n" +
-                "  \\____|  \\___/   \\__,_|  \\___| |_| |_|  \\__,_| |_.__/ \n" +
-                "                                                     ";
-        System.out.println(Cores.getCor("amarelo") + logo);
-        System.out.println(Cores.getCor("amarelo") + "  Digite: 'CodeHub --ajuda' para listar todos os comandos\n");
+//        String logo = "  ____               _          _   _           _     \n" +
+//                "  / ___|   ___     __| |   ___  | | | |  _   _  | |__  \n" +
+//                " | |      / _ \\   / _` |  / _ \\ | |_| | | | | | | '_ \\ \n" +
+//                " | |___  | (_) | | (_| | |  __/ |  _  | | |_| | | |_) |\n" +
+//                "  \\____|  \\___/   \\__,_|  \\___| |_| |_|  \\__,_| |_.__/ \n" +
+//                "                                                     ";
+//        System.out.println(Cores.getCor("amarelo") + logo);
+//        System.out.println(Cores.getCor("amarelo") + "  Digite: 'CodeHub --ajuda' para listar todos os comandos\n");
 
         // controllers
         UsuarioController usuarioController = new UsuarioController();
@@ -69,7 +67,5 @@ public class Main {
         } catch (ArrayIndexOutOfBoundsException e) {
             usuarioController.chamarAjuda();
         }
-
-        repositorioController.listarHistorico();
     }
 }

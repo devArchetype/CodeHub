@@ -4,6 +4,7 @@ import bancodados.BancoDados;
 import ferramentas.Arquivo;
 import models.Repositorio;
 import models.Versao;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -101,9 +102,14 @@ public class VersaoController {
                         e.printStackTrace();
                     }
                 }
+
+                //limpa o arquivo container.json
+                File arquivoContainerJson = new File(getRepositorio().getPath() +
+                        Arquivo.resolvePath() + "container" + Arquivo.resolvePath() + "container.json");
+                Arquivo.escreveJson(arquivoContainerJson, new ArrayList<>());
             }
         }.start(); // executa thread, mesmo se a main travar ou for interrompida, será executado o
-                   // versionamento.
+        // versionamento.
     }
 
     private String geraHashDaVersao() throws NoSuchAlgorithmException {
@@ -139,7 +145,6 @@ public class VersaoController {
             e.printStackTrace();
         }
         return arquivosContainer;
-
     }
 
     private void criaCopiaArquivosRepositorio(String hash) {
@@ -224,7 +229,7 @@ public class VersaoController {
 
     /*
      * METODO PARA IMPLEMENTACAO FUTURA
-     * 
+     *
      * -----------------------------------------------------------------------------
      * ----------------------------------------------
      * private boolean verificaAlteracoesNosArquivos(String local_arquivo, String
