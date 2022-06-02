@@ -15,11 +15,8 @@ public class Validacao {
         if (nome.length() > 20 || nome.length() < 5) {
             System.out.println("\nQuantidade de caracteres invalida!");
             System.out.println("O nome do usuario deve conter de 5 a 20 caracteres!\n");
-            
             return entradaNome();
-        }
-        
-        return nome;
+        }return nome;
     }
     
     /*

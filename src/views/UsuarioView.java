@@ -1,13 +1,16 @@
 package views;
 
-public class UsuarioView {
-    
-    public void imprimirComandos () {
-        
-        //lista os comandos de ajuda
-        System.out.println("Precisa de ajuda? Podemos te ajudar! :) \n" + "\nLista de comandos disponiveis: \n");
+import ferramentas.Cores;
 
-        //chamada de mensagens de ajuda
+public class UsuarioView {
+
+    public void imprimirComandos() {
+
+        // lista os comandos de ajuda
+        System.out.println(Cores.getCor("amarelo") + "Precisa de ajuda? Podemos te ajudar! :) \n"
+                + "\nLista de comandos disponiveis: \n");
+
+        // chamada de mensagens de ajuda
         System.out.println("--ajuda : exibe janela com todos os comandos\n");
         System.out.println("--registrar : registra um novo usuario\n");
         System.out.println("--acessar : acessa conta existente\n");

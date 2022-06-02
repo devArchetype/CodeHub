@@ -1,41 +1,41 @@
 import controllers.RepositorioController;
 import controllers.UsuarioController;
+import controllers.VersaoController;
+
 /**
  *
  * @author CODEHUB
  */
 public class Main {
     public static void main(String[] args) {
-        final String ANSI_YELLOW = "\u001B[33m";
-        String logo = "  ____               _          _   _           _     \n" +
-                "  / ___|   ___     __| |   ___  | | | |  _   _  | |__  \n" +
-                " | |      / _ \\   / _` |  / _ \\ | |_| | | | | | | '_ \\ \n" +
-                " | |___  | (_) | | (_| | |  __/ |  _  | | |_| | | |_) |\n" +
-                "  \\____|  \\___/   \\__,_|  \\___| |_| |_|  \\__,_| |_.__/ \n" +
-                "                                                     " ;
-        System.out.println(ANSI_YELLOW + logo);
-        System.out.println("\033[3m  Frase de  Efeito\033[0m");
-        System.out.println(ANSI_YELLOW + "  Digite: 'CodeHub --ajuda' para listar todos os comandos\n");
+//        String logo = "  ____               _          _   _           _     \n" +
+//                "  / ___|   ___     __| |   ___  | | | |  _   _  | |__  \n" +
+//                " | |      / _ \\   / _` |  / _ \\ | |_| | | | | | | '_ \\ \n" +
+//                " | |___  | (_) | | (_| | |  __/ |  _  | | |_| | | |_) |\n" +
+//                "  \\____|  \\___/   \\__,_|  \\___| |_| |_|  \\__,_| |_.__/ \n" +
+//                "                                                     ";
+//        System.out.println(Cores.getCor("amarelo") + logo);
+//        System.out.println(Cores.getCor("amarelo") + "  Digite: 'CodeHub --ajuda' para listar todos os comandos\n");
 
-        //controllers
+        // controllers
         UsuarioController usuarioController = new UsuarioController();
         RepositorioController repositorioController = new RepositorioController();
-
-        //central de operacoes
+        VersaoController versaoController = new VersaoController();
+        // central de operacoes
         try {
-            //verificacao de login meramente criada pra testes
+            // verificacao de login meramente criada pra testes
             if (usuarioController.estaLogado()) {
                 switch (args[0]) {
-                    case "--ajudar" ->  {
+                    case "--ajudar" -> {
                         usuarioController.chamarAjuda();
                     }
-                    case  "--sair" -> {
+                    case "--sair" -> {
                         usuarioController.sairConta();
                     }
-                    case  "--iniciar" -> {
+                    case "--iniciar" -> {
                         repositorioController.iniciaRepositorio();
                     }
-                    case  "--adicionar" -> {
+                    case "--adicionar" -> {
                         repositorioController.adicionaAoContainer(args[1]);
                     }
                     case "--remover" -> {
@@ -44,16 +44,22 @@ public class Main {
                     case "--registrar", "--acessar" ->  {
                         System.out.println("Usuario logado!");
                     }
+                    case "--versionar" -> {
+                        versaoController.versiona(args[1]);
+                    }
+                    case "--historico" -> {
+                        repositorioController.listarHistorico();
+                    }
                 }
             } else {
                 switch (args[0]) {
-                    case "--ajudar" ->  {
+                    case "--ajudar" -> {
                         usuarioController.chamarAjuda();
                     }
-                    case  "--registrar" -> {
+                    case "--registrar" -> {
                         usuarioController.registraUsuario();
                     }
-                    case  "--acessar" -> {
+                    case "--acessar" -> {
                         usuarioController.acessaConta();
                     }
                     default -> {
@@ -65,5 +71,4 @@ public class Main {
             usuarioController.chamarAjuda();
         }
     }
-
 }

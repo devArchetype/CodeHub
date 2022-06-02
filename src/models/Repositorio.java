@@ -11,15 +11,15 @@ import java.util.UUID;
 
 public class Repositorio {
 
-    private String chavePrimaria; //servira como nome do arquivo .json referente
+    private String chavePrimaria; // servira como nome do arquivo .json referente
     private Usuario administrador;
     private String path;
     private String data;
     private ArrayList<Usuario> contribuidores;
 
-    //construtor para a criacao de um novo repositorio
+    // construtor para a criacao de um novo repositorio
     public Repositorio(Usuario administrador) {
-        this.chavePrimaria = UUID.randomUUID().toString().replaceAll("-", ""); //hash aleatorio
+        this.chavePrimaria = UUID.randomUUID().toString().replaceAll("-", ""); // hash aleatorio
         this.administrador = administrador;
         this.path = this.iniciaPath(true);
         this.data = this.iniciaData();
@@ -31,49 +31,54 @@ public class Repositorio {
     }
 
     /*
-       * inicia o path do repositorio de acordo com a necessidade
-       * quando for iniciar um novo repositorio, o caminho do diretorio atual e incrementado
-       * quando não for iniciar um novo repositorio, o path de algum ja existente e procurado para ser usado
-    */
+     * inicia o path do repositorio de acordo com a necessidade
+     * quando for iniciar um novo repositorio, o caminho do diretorio atual e
+     * incrementado
+     * quando não for iniciar um novo repositorio, o path de algum ja existente e
+     * procurado para ser usado
+     */
     private String iniciaPath(boolean criarNovoRepo) {
-        String diretorioAtual = System.getProperty("user.dir"); //diretorio onde o programa esta rodado
+        String diretorioAtual = System.getProperty("user.dir"); // diretorio onde o programa esta rodado
 
-        //diretorio pai, onde sera procurado, entre seus filhos, o repositorio .CodeHub
+        // diretorio pai, onde sera procurado, entre seus filhos, o repositorio .CodeHub
         File diretorioPai = new File(diretorioAtual);
-        //variavel para a possivel ocorrencia de repositorio .CodeHub
+        // variavel para a possivel ocorrencia de repositorio .CodeHub
         File repositorioCodeHub = null;
 
-        //procurando por um diretorio .CodeHub ate chegar na raiz de todos as pastas do pc, ou encontrar um
+        // procurando por um diretorio .CodeHub ate chegar na raiz de todos as pastas do
+        // pc, ou encontrar um
         while (diretorioPai != null && repositorioCodeHub == null) {
-            File[] arquivosVerificar = diretorioPai.listFiles(); //todos os arquivos dentro de um diretorio pai
+            File[] arquivosVerificar = diretorioPai.listFiles(); // todos os arquivos dentro de um diretorio pai
 
             if (arquivosVerificar != null) {
                 for (File arquivoVerificar : arquivosVerificar) {
                     if (arquivoVerificar.getName().equals(".CodeHub")) {
-                        //achou
+                        // achou
                         repositorioCodeHub = arquivoVerificar;
                         break;
                     }
                 }
             }
 
-            //diretorio pai, agora um nivel acima do anterior
+            // diretorio pai, agora um nivel acima do anterior
             diretorioPai = diretorioPai.getParentFile();
         }
 
-        //decisao de qual path usar
-        if (repositorioCodeHub == null || criarNovoRepo) return diretorioAtual + Arquivo.resolvePath() + ".CodeHub";
-        else return repositorioCodeHub.getAbsolutePath();
+        // decisao de qual path usar
+        if (repositorioCodeHub == null || criarNovoRepo)
+            return diretorioAtual + Arquivo.resolvePath() + ".CodeHub";
+        else
+            return repositorioCodeHub.getAbsolutePath();
     }
 
-    //inicia a data atual em formato de string
+    // inicia a data atual em formato de string
     private String iniciaData() {
         LocalDateTime agora = LocalDateTime.now();
         DateTimeFormatter template = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         return agora.format(template);
     }
 
-    //registra o objeto vigente no BD
+    // registra o objeto vigente no BD
     public boolean registraDados() {
         return BancoDados.registraRepositorio(this);
     }
