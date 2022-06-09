@@ -48,6 +48,7 @@ public class Main {
                         repositorioController.listarHistorico();
                     }
                     case "--voltar" -> {
+                        repositorioController.listarHistorico();
                         repositorioController.voltarVersao(args[1]);;
                     }
                 }
