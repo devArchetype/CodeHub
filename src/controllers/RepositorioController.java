@@ -109,6 +109,112 @@ public class RepositorioController {
             Arquivo.escreveJson(arquivoContainerJson, container);
         }
     }
+     /*
+    * Função responsavel por voltar versões anteriores
+    */
+    public void voltarVersao(String hash) {
+        
+        //Verifica se a Hash está certa 
+         Versao ver = BancoDados.consultaVersao(hash);
+         if(ver == null){
+             System.out.println("A hash inserida não existe no banco");
+             return;
+         }
+      
+        //Salva a versão atual
+        VersaoController v = new VersaoController();
+        v.versiona("Versão criada automaticamente pelo sistema ao voltar versão");
+        
+        // Vetores usados para saber quais arquivos deletar e quais não deletar
+        Vector arquivosVerificar = new Vector<>();
+        Vector arquivosProcessar = new Vector<>();
+        
+        //Caminho do arquivo atual que vai ser deletado
+        File diretorioPai = new File(new File(this.repositorio.getPath()).getParent());
+
+        //add todos os diretorios da pasta raiz
+        Collections.addAll(arquivosVerificar, diretorioPai.listFiles());
+
+        //abrindo cada uma das sub pastas
+        while (!arquivosVerificar.isEmpty()) {
+            File arqAtual = (File) arquivosVerificar.remove(0);
+            //Se for um arquivo adiciona, se for uma pasta ela é salva para olharmos dentro dela
+            if (arqAtual.isFile()) {
+                arquivosProcessar.add(arqAtual);
+            } else {
+                //pode ser pasta ou o arquivo onde guardamos as versões
+                if (arqAtual.isDirectory() && !arqAtual.getName().equals("versoes") && !arqAtual.getName().equals("container")) {
+                    Collections.addAll(arquivosVerificar,
+                            arqAtual.listFiles());
+                }
+                arquivosProcessar.add(arqAtual);
+            }
+        }
+        //Loopando os arquivos que acabamos de salvar e deletamos cada um
+        for (int arq = 0; arq != arquivosProcessar.size(); arq++) {
+            File arquivo = (File) arquivosProcessar.get(arq);
+            if (!arquivo.getName().equals(".CodeHub") && !arquivo.getName().equals("CodeHub.jar")) {
+                //.deleteOnExit, deleta o arquivo na saida do programa, não no momento atual
+                  arquivo.deleteOnExit();
+            }
+        }
+
+        //O metodo acima não deleta as pastas, por isso é necessario criar um loop para deletar estas
+        if (diretorioPai.listFiles() != null) {       
+            for (File arquivoVerificar : diretorioPai.listFiles()) {
+                if (!arquivoVerificar.getName().equals(".CodeHub") && !arquivoVerificar.getName().equals("CodeHub.jar")) {
+                    //.deleteOnExit, deleta o arquivo na saida do programa, não no momento atual
+                    arquivoVerificar.deleteOnExit();
+                }
+            }
+        }
+        
+        
+        //Definimos a versão que voltara como a atual no banco de dados
+        ver.setVersaoAtual(true);
+        v.atualizaVersaoAtual();
+        
+        // salva as modificações no banco de dados.
+        File registroVersao = new File(BancoDados.getTabelaVersoes().getAbsolutePath() + Arquivo.resolvePath() + ver.getChavePrimaria() + ".json");     
+        Arquivo.escreveJson(registroVersao, ver);
+
+        //Finalmente volta a versão selecionada
+        File voltaArquivos = new File(this.repositorio.getPath() + Arquivo.resolvePath() + "versoes" + Arquivo.resolvePath() + ver.getChavePrimaria());
+        
+        if (voltaArquivos.listFiles() != null) {
+        //verificando se o arquivo a ser adicionado no container existe na pasta do
+            // projeto, assim o adicionando
+            for (File arquivoVerificar : voltaArquivos.listFiles()) {
+                if (!arquivoVerificar.getName().equals(".CodeHub") && !arquivoVerificar.getName().equals("CodeHub.jar")) {
+                    try {
+                        //Copia os diretorios de arquivo da Hash, para o lugar escolhido
+                        copiandoDiretorios(arquivoVerificar.getPath(), "" + new File(this.repositorio.getPath()).getParent() + Arquivo.resolvePath() + arquivoVerificar.getName());
+                        
+                         //Comando que inves de copiar, move os arquivos : Pode ser útil no futuro( Retorna true se o arquivo foi movido com sucesso, e false se não foi)
+                         //System.out.println(arquivoVerificar.renameTo(new File(new File(this.repositorio.getPath()).getParent() + Arquivo.resolvePath()+arquivoVerificar.getName())));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+ 
+    }
+
+    public static void copiandoDiretorios(String origemDoArquivo, String destinoDoArquivo) throws IOException {
+        //Anda pela arvore copiando arquivo por arquivo e diretorio por diretorio
+        //Documentação : https://www.baeldung.com/java-copy-directory
+        Files.walk(Paths.get(origemDoArquivo))
+                .forEach(source -> {
+                    Path destination = Paths.get(destinoDoArquivo, source.toString()
+                            .substring(origemDoArquivo.length()));
+                    try {
+                        Files.copy(source, destination);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });        
+    }
 
     public void listarHistorico() {
         repositorioView.listarHistorico(this.repositorio);
