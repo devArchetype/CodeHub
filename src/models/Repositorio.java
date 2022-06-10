@@ -65,10 +65,8 @@ public class Repositorio {
         }
 
         // decisao de qual path usar
-        if (repositorioCodeHub == null || criarNovoRepo)
-            return diretorioAtual + Arquivo.resolvePath() + ".CodeHub";
-        else
-            return repositorioCodeHub.getAbsolutePath();
+        if (repositorioCodeHub == null || criarNovoRepo) return diretorioAtual + Arquivo.resolvePath() + ".CodeHub";
+        else return repositorioCodeHub.getAbsolutePath();
     }
 
     // inicia a data atual em formato de string

@@ -9,6 +9,8 @@
 *.idea
 *.iml
 *.xml
+*.MF
 
 #CodeHub
 .CodeHub
+CodeHub.*

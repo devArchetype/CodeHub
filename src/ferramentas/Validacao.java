@@ -4,19 +4,20 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 public class Validacao {
-    
+
     private static final Scanner SCAN = new Scanner(System.in);
 
     public static String entradaNome() {
         System.out.print("Nome: ");
         String nome = SCAN.nextLine();
-        
+
         //restricao de formato
         if (nome.length() > 20 || nome.length() < 5) {
             System.out.println("\nQuantidade de caracteres invalida!");
             System.out.println("O nome do usuario deve conter de 5 a 20 caracteres!\n");
             return entradaNome();
-        }return nome;
+        }
+        return nome;
     }
     
     /*
@@ -36,11 +37,11 @@ public class Validacao {
         //verifica se condiz com a regex definida
         if (!matcher.matches()) {
             System.out.println("\nEmail invalido!");
-            
-            if(login) System.exit(0); //verificacao de comportamento
-            
+
+            if (login) System.exit(0); //verificacao de comportamento
+
             System.out.println("Exemplo de email valido: exemplo@dominio.com\n");
-            
+
             return entradaEmail(false);
         }
 
@@ -50,7 +51,7 @@ public class Validacao {
     public static String entradaSenha(boolean login) {
         System.out.print("Senha: ");
         String senha = SCAN.nextLine();
-        
+
         if (!login) { //verificacao de comportamento
             System.out.print("Confirmacao da senha: ");
             String senhaConfirmada = SCAN.nextLine();
@@ -60,7 +61,7 @@ public class Validacao {
                 return entradaSenha(false);
             }
         }
-        
+
         //regex para o formato valido da senha
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#!])[0-9a-zA-Z$*&@#!]{8,}$";
         Pattern pattern = Pattern.compile(regex);
@@ -69,14 +70,14 @@ public class Validacao {
         //verifica se condiz com a regex definida
         if (!matcher.matches()) {
             System.out.println("\nSenha invalida!");
-            
-            if(login) System.exit(0); //verificacao de comportamento
-            
+
+            if (login) System.exit(0); //verificacao de comportamento
+
             System.out.println("Deve conter ao menos 8 digitos" +
                     "\nDeve conter ao menos uma letra maiuscula" +
                     "\nDeve conter ao menos uma letra minuscula" +
                     "\nDeve conter ao menos um caractere");
-            
+
             return entradaSenha(false);
         }
 

@@ -34,14 +34,12 @@ public class RepositorioController {
         try {
             if (!pastaCodeHub.exists()) {
                 // criacao da estrutura de .CodeHub
-                File pastaVersoes = new File(
-                        pastaCodeHub.getAbsolutePath() + Arquivo.resolvePath() + "versoes");
-                File pastaContainer = new File(
-                        pastaCodeHub.getAbsolutePath() + Arquivo.resolvePath() + "container");
-                File arquivoContainer = new File(
-                        pastaContainer.getAbsolutePath() +
-                                Arquivo.resolvePath() +
-                                "container.json");
+                File pastaVersoes = new File(pastaCodeHub.getAbsolutePath()
+                        + Arquivo.resolvePath() + "versoes");
+                File pastaContainer = new File(pastaCodeHub.getAbsolutePath()
+                        + Arquivo.resolvePath() + "container");
+                File arquivoContainer = new File(pastaContainer.getAbsolutePath()
+                        + Arquivo.resolvePath() + "container.json");
 
                 // criacao dos arquivos
                 pastaCodeHub.mkdir();
@@ -62,59 +60,18 @@ public class RepositorioController {
     }
 
     public void adicionaAoContainer(String arquivoAdicionar) {
-        // selecionando o arquivo container.json
-        File arquivoContainerJson = new File(
-                this.repositorio.getPath() + Arquivo.resolvePath() + "container" + Arquivo.resolvePath() + "container.json");
+        //verificando se existe um repositorio '.CodeHub' iniciado
+        if (!new File(this.repositorio.getPath()).exists()) return;
+
+        //selecionando o arquivo container.json
+        File arquivoContainerJson = new File(this.repositorio.getPath() + Arquivo.resolvePath() +
+                "container" + Arquivo.resolvePath() + "container.json");
         try {
             arquivoContainerJson.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // objeto FileReader necessario para se fazer a leitura de um arquivo qualquer
-        FileReader containerLeitura = null;
-        try {
-            containerLeitura = new FileReader(arquivoContainerJson);
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
             System.exit(0);
-        } finally {
-            // leitura do arquivo container.json, assim retornando um ArrayList<String> com
-            // todos os paths existentes nele
-            ArrayList<String> container = Arquivo.leContainerJson(containerLeitura);
-            // se nao haver nada no container.json, um ArrayList<String> vazio e iniciado
-            if (container == null)
-                container = new ArrayList<>();
-            // diretorio do projeto, que contem a pasta .CodeHub
-            File diretorioPai = new File(new File(this.repositorio.getPath()).getParent());
-            // verificando se o diretorio pai possui filhos
-            if (diretorioPai.listFiles() != null) {
-                // verificando se o arquivo a ser adicionado no container existe na pasta do
-                // projeto, assim o adicionando
-                for (File arquivoVerificar : diretorioPai.listFiles()) {
-                    if (arquivoAdicionar.equals(".") && !arquivoVerificar.getName().equals(".CodeHub")
-                            && !arquivoVerificar.getName().equals("CodeHub.jar")) {
-                        // parametro que diz para adicionar todos os arquivos do projeto no container
-                        container.add(arquivoVerificar.getAbsolutePath());
-                    } else if (arquivoVerificar.getName().equals(arquivoAdicionar)) {
-                        // existe, então, adicione ele ao ArrayList do container.json e pare por aqui
-                        container.add(arquivoVerificar.getAbsolutePath() + ","); // para separar por v´rgulas
-                        break;
-                    }
-                }
-            }
-
-            // escrevendo o objeto ArrayList<String> no container.json, agora com novos
-            // arquivos adicionados ou nao
-
-            Arquivo.escreveJson(arquivoContainerJson, container);
         }
-    }
-    
-    public void removeDoContainer (String arquivoRemover) {
-        //seleciona o arquivo container.json e armazena em um objeto file criado
-        File arquivoContainerJson = new File(this.repositorio.getPath() + 
-                Arquivo.resolvePath()  + "container" + Arquivo.resolvePath() + "container.json");
-    
+
         //objeto FileReader necessario para se fazer a leitura de um arquivo qualquer
         FileReader containerLeitura = null;
         try {
@@ -122,27 +79,75 @@ public class RepositorioController {
         } catch (FileNotFoundException e) {
             System.exit(0);
         }
-        
-        //leitura do arquivo container.json, assim retornando um ArrayList<String> com todos os paths existentes nele
+
+        // leitura do arquivo container.json, assim retornando um ArrayList<String> com
+        // todos os paths existentes nele
         ArrayList<String> container = Arquivo.leContainerJson(containerLeitura);
-        
-        //percorre o array container que contem os paths
-        for (int i = 0; i < container.size(); i++){
-            String arquivoAtual = container.get(i); 
-            
-            //remove o arquivo que foi solicitado
-            if (arquivoAtual.endsWith(arquivoRemover)){
-                container.remove(i);
-                break;
+
+        // se nao haver nada no container.json, um ArrayList<String> vazio e iniciado
+        if (container == null) container = new ArrayList<>();
+
+        // diretorio do projeto, que contem a pasta .CodeHub
+        File diretorioPai = new File(new File(this.repositorio.getPath()).getParent());
+
+        // verificando se o diretorio pai possui filhos
+        if (diretorioPai.listFiles() != null) {
+            // verificando se o arquivo a ser adicionado no container existe na pasta do projeto, assim o adicionando
+            for (File arquivoVerificar : diretorioPai.listFiles()) {
+                if (arquivoAdicionar.equals(".") && !arquivoVerificar.getName().equals(".CodeHub")
+                        && !arquivoVerificar.getName().equals("CodeHub.jar")) {
+                    // parametro que diz para adicionar todos os arquivos do projeto no container
+                    container.add(arquivoVerificar.getAbsolutePath());
+                } else if (arquivoVerificar.getName().equals(arquivoAdicionar)) {
+                    // existe, então, adicione ele ao ArrayList do container.json e pare por aqui
+                    container.add(arquivoVerificar.getAbsolutePath());
+                    break;
+                }
             }
         }
-        
+
+        // escrevendo o objeto ArrayList<String> no container.json, agora com novos arquivos adicionados ou nao
+        Arquivo.escreveJson(arquivoContainerJson, container);
+    }
+
+    public void removeDoContainer (String arquivoRemover) {
+        //seleciona o arquivo container.json e armazena em um objeto file criado
+        File arquivoContainerJson = new File(this.repositorio.getPath() +
+                Arquivo.resolvePath()  + "container" + Arquivo.resolvePath() + "container.json");
+
+        //objeto FileReader necessario para se fazer a leitura de um arquivo qualquer
+        FileReader containerLeitura = null;
+        try {
+            containerLeitura = new FileReader(arquivoContainerJson);
+        } catch (FileNotFoundException e) {
+            System.exit(0);
+        }
+
+        ArrayList<String> container = new ArrayList<>();
+
+        if(!arquivoRemover.equals(".")) {
+            //leitura do arquivo container.json, assim retornando um ArrayList<String> com todos os paths existentes nele
+            container = Arquivo.leContainerJson(containerLeitura);
+
+            //percorre o array container que contem os paths
+            for (int i = 0; i < container.size(); i++){
+                String arquivoAtual = container.get(i);
+
+                //remove o arquivo que foi solicitado
+                if (arquivoAtual.endsWith(arquivoRemover)){
+                    container.remove(i);
+                    break;
+                }
+            }
+        }
+
         //reescreve o container com as devidas remocoes solicitadas pelo usuario
         Arquivo.escreveJson(arquivoContainerJson, container);
     }
-    
+
     public void listarHistorico() {
         repositorioView.listarHistorico(this.repositorio);
     }
+
 }
 

@@ -3,6 +3,7 @@ package controllers;
 import ferramentas.*;
 
 import java.util.prefs.Preferences;
+
 import models.Usuario;
 import views.UsuarioView;
 
@@ -28,7 +29,7 @@ public class UsuarioController {
         if (usuario.registraDados()) {
             System.out.println("\n" + Cores.getCor("verde") + "Conta cadastrada com sucesso!");
         } else {
-            System.out.println("\n" + Cores.getCor("vermelho") +"Email ja cadastrado!");
+            System.out.println("\n" + Cores.getCor("vermelho") + "Email ja cadastrado!");
         }
     }
 

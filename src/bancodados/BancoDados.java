@@ -137,8 +137,9 @@ public class BancoDados {
     }
 
     public static boolean registraVersao(Versao versao) {
-        if (!TABELA_VERSOES.exists())
+        if (!TABELA_VERSOES.exists()) {
             TABELA_VERSOES.mkdir();
+        }
         // caminho para o json a ser criado:
         File registraVersao = new File(TABELA_VERSOES.getAbsolutePath() + Arquivo.resolvePath() +
                 versao.getChavePrimaria() + ".json");
@@ -154,4 +155,5 @@ public class BancoDados {
             return null;
         }
     }
+
 }

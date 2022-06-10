@@ -2,10 +2,6 @@ import controllers.RepositorioController;
 import controllers.UsuarioController;
 import controllers.VersaoController;
 
-/**
- *
- * @author CODEHUB
- */
 public class Main {
     public static void main(String[] args) {
 //        String logo = "  ____               _          _   _           _     \n" +
@@ -21,6 +17,7 @@ public class Main {
         UsuarioController usuarioController = new UsuarioController();
         RepositorioController repositorioController = new RepositorioController();
         VersaoController versaoController = new VersaoController();
+
         // central de operacoes
         try {
             // verificacao de login meramente criada pra testes
@@ -41,14 +38,14 @@ public class Main {
                     case "--remover" -> {
                         repositorioController.removeDoContainer(args[1]);
                     }
-                    case "--registrar", "--acessar" ->  {
-                        System.out.println("Usuario logado!");
-                    }
                     case "--versionar" -> {
                         versaoController.versiona(args[1]);
                     }
                     case "--historico" -> {
                         repositorioController.listarHistorico();
+                    }
+                    case "--registrar", "--acessar" ->  {
+                        System.out.println("Usuario logado!");
                     }
                 }
             } else {
