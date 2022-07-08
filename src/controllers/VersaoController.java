@@ -50,7 +50,7 @@ public class VersaoController {
     }
 
     private void threadVersiona(String comentario) {
-        // cria threads para executar as funções do versionar
+        // cria threads para executar as funções do versionar (não dm)
         String emailCookie = Preferences.userRoot().get("emailUser", "");
         new Thread() {
             @Override
