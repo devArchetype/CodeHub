@@ -184,7 +184,7 @@ public class VersaoController {
     }
 
     // Atualiza versao com atributo de versão atual
-    private void atualizaVersaoAtual() {
+   protected void atualizaVersaoAtual() {
         // Selecionando todas as versões do repositório atual
         File[] arquivoChaveVersoes = pastaVersoes.listFiles();
         if (arquivoChaveVersoes == null) return;
