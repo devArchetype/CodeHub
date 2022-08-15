@@ -50,7 +50,9 @@ public class Main {
                     }
                     case "--voltar"->  {
                         repositorioController.voltarVersao(args[1]);
-                       
+                    }
+                    case "--container"->  {
+                        repositorioController.listaArquivosDoContainer();
                     }
                 }
             } else {
