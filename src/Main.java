@@ -36,6 +36,9 @@ public class Main {
                     case "--adicionar" -> {
                         repositorioController.adicionaAoContainer(args[1]);
                     }
+                     case "--deletar" -> {
+                        repositorioController.deletaVersao(args[1]);
+                    }
                     case "--remover" -> {
                         repositorioController.removeDoContainer(args[1]);
                     }
