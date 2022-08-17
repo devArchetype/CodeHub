@@ -52,6 +52,10 @@ public class Main {
                         repositorioController.voltarVersao(args[1]);
                        
                     }
+                    case "--apagar"->  {
+                        versaoController.deletarVersao(args[1]);
+                       
+                    }
                 }
             } else {
                 switch (args[0]) {
