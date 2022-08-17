@@ -8,6 +8,7 @@ import models.Versao;
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class VersaoController {
     private Versao versao;
     private File pastaCodeHub = new File(this.repositorio.getPath());
     private File pastaVersoes = new File(pastaCodeHub.getAbsolutePath() + Arquivo.resolvePath() + "versoes");
+    private File pastaLixeira = new File(pastaCodeHub.getAbsolutePath() + Arquivo.resolvePath() + "lixeira");
 
     // métodos getters
     public Repositorio getRepositorio() {
@@ -33,6 +35,10 @@ public class VersaoController {
 
     public File getPastaVersoes() {
         return pastaVersoes;
+    }
+
+    public File getPastaLixeira() {
+        return pastaLixeira;
     }
 
     // construtor
@@ -89,7 +95,8 @@ public class VersaoController {
                 RepositorioController repositorioController = new RepositorioController();
                 repositorioController.removeDoContainer(".");
             }
-        }.start(); // executa thread, mesmo se a main travar ou for interrompida, será executado o versionamento.
+        }.start(); // executa thread, mesmo se a main travar ou for interrompida, será executado o
+                   // versionamento.
     }
 
     private String geraHashDaVersao() throws NoSuchAlgorithmException {
@@ -143,7 +150,8 @@ public class VersaoController {
         // copia itens do repositorio para pasta versoes
         if (conteudoRepositorio() != null && !conteudoRepositorio().isEmpty()) {
             File destino = new File(getPastaVersoes().toString() + Arquivo.resolvePath() + hash);
-            if (!destino.exists()) destino.mkdir();
+            if (!destino.exists())
+                destino.mkdir();
 
             for (String caminhos : conteudoRepositorio()) {
                 File arquivoAtual = new File(caminhos);
@@ -156,7 +164,8 @@ public class VersaoController {
                             Runtime.getRuntime().exec("Xcopy " + caminhos + " " + destino);
                         } else {
                             File auxiliar = new File(destino + Arquivo.resolvePath() + new File(caminhos).getName());
-                            if (!auxiliar.exists()) auxiliar.mkdir(); // cria a pasta
+                            if (!auxiliar.exists())
+                                auxiliar.mkdir(); // cria a pasta
 
                             try { // cria a cópia
                                 Runtime.getRuntime().exec("Xcopy /E /I " + caminhos + " " + destino
@@ -184,17 +193,19 @@ public class VersaoController {
     }
 
     // Atualiza versao com atributo de versão atual
-   protected void atualizaVersaoAtual() {
+    protected void atualizaVersaoAtual() {
         // Selecionando todas as versões do repositório atual
         File[] arquivoChaveVersoes = pastaVersoes.listFiles();
-        if (arquivoChaveVersoes == null) return;
+        if (arquivoChaveVersoes == null)
+            return;
 
         for (File arquivo : arquivoChaveVersoes) {
             String chaveArquivo = arquivo.getName();
 
             Versao versao = BancoDados.consultaVersao(chaveArquivo);
 
-            // Se o atributo versaoAtual for true, troca para false e da um update no banco de dados
+            // Se o atributo versaoAtual for true, troca para false e da um update no banco
+            // de dados
             if (versao != null && versao.getValorAtual()) {
                 versao.setVersaoAtual(false);
 
@@ -205,6 +216,21 @@ public class VersaoController {
                 Arquivo.escreveJson(caminhoVersao, versao);
                 break;
             }
+        }
+    }
+
+    public void deletarVersao(String hashVersao) {
+        // Origem da versao relativo a pasta versoes
+        File origem = new File(getPastaVersoes() + Arquivo.resolvePath() + hashVersao);
+        // Destino da versao relativa a pasta lixeira
+        File destino = new File(getPastaLixeira().toString() + Arquivo.resolvePath() + hashVersao);
+
+        try {
+            if (origem.exists() && !destino.exists())
+                // Files.move(source, target, options);
+                Files.move(origem.toPath(), destino.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
