@@ -154,6 +154,52 @@ public class RepositorioController {
     public void listarHistorico() {
         repositorioView.listarHistorico(this.repositorio);
     }
+    public void deletaVersao(String versaoHash){
+        
+      // Vetores usados para saber quais arquivos deletar e quais não deletar
+        Vector arquivosVerificar = new Vector<>();
+        Vector arquivosProcessar = new Vector<>();
+        
+        //Caminho do arquivo atual que vai ser deletado
+        File diretorioPai = new File(this.repositorio.getPath()+"\\versoes\\"+versaoHash);
+        while(diretorioPai.exists()){
+        //add todos os diretorios da pasta raiz
+        Collections.addAll(arquivosVerificar, diretorioPai.listFiles());
+
+        //Forcando o programa a deletar todos os arquivos
+        while (!arquivosVerificar.isEmpty()) {
+                //abrindo cada uma das sub pastas
+                File arqAtual = (File) arquivosVerificar.remove(0);
+                //Se for um arquivo adiciona, se for uma pasta ela é salva para olharmos dentro dela
+                if (arqAtual.isFile()) {
+                    arquivosProcessar.add(arqAtual);
+                } else {
+                        Collections.addAll(arquivosVerificar,
+                                arqAtual.listFiles());        
+                    arquivosProcessar.add(arqAtual);
+                }
+            }
+            //Loopando os arquivos que acabamos de salvar e deletamos cada um
+            for (int arq = 0; arq != arquivosProcessar.size(); arq++) {
+                File arquivo = (File) arquivosProcessar.get(arq);
+                    //.deleteOnExit, deleta o arquivo na saida do programa, não no momento atual
+                      arquivo.delete();
+            }
+
+            //O metodo acima não deleta as pastas, por isso é necessario criar um loop para deletar estas
+            if (diretorioPai.listFiles() != null) {       
+                for (File arquivoVerificar : diretorioPai.listFiles()){            
+                        //.deleteOnExit, deleta o arquivo na saida do programa, não no momento atual
+                        arquivoVerificar.delete();
+                }
+            }
+            
+            //Deleta a pasta pai
+           diretorioPai.delete();
+        }
+        
+  
+    }
      /*
     * Função responsavel por voltar versões anteriores
     */
