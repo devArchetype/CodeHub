@@ -19,65 +19,60 @@ public class Main {
         RepositorioController repositorioController = new RepositorioController();
         VersaoController versaoController = new VersaoController();
 
-        // repositorioController.adicionaAoContainer("README.md");
-        versaoController.deletarVersao("298947980994532923104387014428813828138");
-
         // central de operacoes
-        // try {
-        //     // verificacao de login meramente criada pra testes
-        //     if (usuarioController.estaLogado()) {
-        //         switch (args[0]) {
-        //             case "--ajudar" -> {
-        //                 usuarioController.chamarAjuda();
-        //             }
-        //             case "--sair" -> {
-        //                 usuarioController.sairConta();
-        //             }
-        //             case "--iniciar" -> {
-        //                 repositorioController.iniciaRepositorio();
-        //             }
-        //             case "--adicionar" -> {
-        //                 repositorioController.adicionaAoContainer(args[1]);
-        //             }
-        //             case "--remover" -> {
-        //                 repositorioController.removeDoContainer(args[1]);
-        //             }
-        //             case "--versionar" -> {
-        //                 versaoController.versiona(args[1]);
-        //             }
-        //             case "--historico" -> {
-        //                 repositorioController.listarHistorico();
-        //             }
-        //             case "--registrar", "--acessar" -> {
-        //                 System.out.println("Usuario logado!");
-        //             }
-        //             case "--voltar" -> {
-        //                 repositorioController.voltarVersao(args[1]);
-
-        //             }
-        //             case "--apagar" -> {
-        //                 versaoController.deletarVersao(args[1]);
-
-        //             }
-        //         }
-        //     } else {
-        //         switch (args[0]) {
-        //             case "--ajudar" -> {
-        //                 usuarioController.chamarAjuda();
-        //             }
-        //             case "--registrar" -> {
-        //                 usuarioController.registraUsuario();
-        //             }
-        //             case "--acessar" -> {
-        //                 usuarioController.acessaConta();
-        //             }
-        //             default -> {
-        //                 System.out.println("Faca login antes de continuar!");
-        //             }
-        //         }
-        //     }
-        // } catch (ArrayIndexOutOfBoundsException e) {
-        //     usuarioController.chamarAjuda();
-        // }
+        try {
+            // verificacao de login meramente criada pra testes
+            if (usuarioController.estaLogado()) {
+              switch (args[0]) {
+                  case "--ajudar" -> {
+                      usuarioController.chamarAjuda();
+                  }
+                  case "--sair" -> {
+                      usuarioController.sairConta();
+                  }
+                  case "--iniciar" -> {
+                      repositorioController.iniciaRepositorio();
+                  }
+                  case "--adicionar" -> {
+                      repositorioController.adicionaAoContainer(args[1]);
+                  }
+                  case "--remover" -> {
+                      repositorioController.removeDoContainer(args[1]);
+                  }
+                  case "--versionar" -> {
+                      versaoController.versiona(args[1]);
+                  }
+                  case "--historico" -> {
+                      repositorioController.listarHistorico();
+                  }
+                  case "--registrar", "--acessar" -> {
+                      System.out.println("Usuario logado!");
+                  }
+                  case "--voltar" -> {
+                      repositorioController.voltarVersao(args[1]);
+                  }
+                  case "--apagar" -> {
+                      versaoController.deletarVersao(args[1]);
+                  }
+              }
+          } else {
+              switch (args[0]) {
+                  case "--ajudar" -> {
+                      usuarioController.chamarAjuda();
+                  }
+                  case "--registrar" -> {
+                      usuarioController.registraUsuario();
+                  }
+                  case "--acessar" -> {
+                      usuarioController.acessaConta();
+                  }
+                  default -> {
+                      System.out.println("Faca login antes de continuar!");
+                  }
+              }
+          }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            usuarioController.chamarAjuda();
+        }
     }
 }
