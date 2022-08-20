@@ -47,12 +47,15 @@ public class RepositorioController {
                         + Arquivo.resolvePath() + "container");
                 File arquivoContainer = new File(pastaContainer.getAbsolutePath()
                         + Arquivo.resolvePath() + "container.json");
+                File pastaLixeira = new File(pastaCodeHub.getAbsolutePath()
+                        + Arquivo.resolvePath() + "lixeira");
 
                 // criacao dos arquivos
                 pastaCodeHub.mkdir();
                 pastaVersoes.mkdir();
                 pastaContainer.mkdir();
                 arquivoContainer.createNewFile();
+                pastaLixeira.mkdir();
 
                 // registrando o repositorio no "banco de dados"
                 this.repositorio.registraDados();
@@ -220,8 +223,6 @@ public class RepositorioController {
             //Deleta a pasta pai
            diretorioPai.delete();
         }
-        
-  
     }
      /*
     * Função responsavel por voltar versões anteriores

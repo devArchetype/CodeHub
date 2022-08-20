@@ -11,3 +11,5 @@
 *.xml
 *.MF
 
+# CodeHub
+.CodeHub

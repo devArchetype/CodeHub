@@ -23,57 +23,57 @@ public class Main {
         try {
             // verificacao de login meramente criada pra testes
             if (usuarioController.estaLogado()) {
-                switch (args[0]) {
-                    case "--ajudar" -> {
-                        usuarioController.chamarAjuda();
-                    }
-                    case "--sair" -> {
-                        usuarioController.sairConta();
-                    }
-                    case "--iniciar" -> {
-                        repositorioController.iniciaRepositorio();
-                    }
-                    case "--adicionar" -> {
-                        repositorioController.adicionaAoContainer(args[1]);
-                    }
-                     case "--deletar" -> {
-                        repositorioController.deletaVersao(args[1]);
-                    }
-                    case "--remover" -> {
-                        repositorioController.removeDoContainer(args[1]);
-                    }
-                    case "--versionar" -> {
-                        versaoController.versiona(args[1]);
-                    }
-                    case "--historico" -> {
-                        repositorioController.listarHistorico();
-                    }
-                    case "--registrar", "--acessar" ->  {
-                        System.out.println("Usuario logado!");
-                    }
-                    case "--voltar"->  {
-                        repositorioController.voltarVersao(args[1]);
-                    }
-                    case "--container"->  {
-                        repositorioController.listaArquivosDoContainer();
-                    }
-                }
-            } else {
-                switch (args[0]) {
-                    case "--ajudar" -> {
-                        usuarioController.chamarAjuda();
-                    }
-                    case "--registrar" -> {
-                        usuarioController.registraUsuario();
-                    }
-                    case "--acessar" -> {
-                        usuarioController.acessaConta();
-                    }
-                    default -> {
-                        System.out.println("Faca login antes de continuar!");
-                    }
-                }
-            }
+              switch (args[0]) {
+                  case "--ajudar" -> {
+                      usuarioController.chamarAjuda();
+                  }
+                  case "--sair" -> {
+                      usuarioController.sairConta();
+                  }
+                  case "--iniciar" -> {
+                      repositorioController.iniciaRepositorio();
+                  }
+                  case "--adicionar" -> {
+                      repositorioController.adicionaAoContainer(args[1]);
+                  }
+                  case "--remover" -> {
+                      repositorioController.removeDoContainer(args[1]);
+                  }
+                  case "--versionar" -> {
+                      versaoController.versiona(args[1]);
+                  }
+                  case "--historico" -> {
+                      repositorioController.listarHistorico();
+                  }
+                  case "--registrar", "--acessar" -> {
+                      System.out.println("Usuario logado!");
+                  }
+                  case "--voltar" -> {
+                      repositorioController.voltarVersao(args[1]);
+                  }
+                  case "--apagar" -> {
+                      versaoController.deletarVersao(args[1]);
+                  }
+                  case "--container"->  {
+                    repositorioController.listaArquivosDoContainer();
+                  }
+              }
+          } else {
+              switch (args[0]) {
+                  case "--ajudar" -> {
+                      usuarioController.chamarAjuda();
+                  }
+                  case "--registrar" -> {
+                      usuarioController.registraUsuario();
+                  }
+                  case "--acessar" -> {
+                      usuarioController.acessaConta();
+                  }
+                  default -> {
+                      System.out.println("Faca login antes de continuar!");
+                  }
+              }
+          }
         } catch (ArrayIndexOutOfBoundsException e) {
             usuarioController.chamarAjuda();
         }
