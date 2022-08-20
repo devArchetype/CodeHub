@@ -219,14 +219,33 @@ public class VersaoController {
         }
     }
 
+    public static void deleteDirectory(File file) {
+        for (File subArquivo : file.listFiles()) {
+
+            if (subArquivo.isDirectory()) {
+                deleteDirectory(subArquivo);
+            }
+
+            subArquivo.delete();
+        }
+    }
+
     public void deletarVersao(String hashVersao) {
         // Origem da versao relativo a pasta versoes
         File origem = new File(getPastaVersoes() + Arquivo.resolvePath() + hashVersao);
+
+        File lixeira = new File(getPastaLixeira().toString());
         // Destino da versao relativa a pasta lixeira
-        File destino = new File(getPastaLixeira().toString() + Arquivo.resolvePath() + hashVersao);
+        File destino = new File(lixeira + Arquivo.resolvePath() + hashVersao);
 
         try {
             if (origem.exists() && !destino.exists()) {
+
+                File[] versaoAntiga = lixeira.listFiles();
+                deleteDirectory(versaoAntiga[0]);
+
+                versaoAntiga[0].delete();
+
                 // Files.move(source, target, options);
                 Files.move(origem.toPath(), destino.toPath());
             } else {
