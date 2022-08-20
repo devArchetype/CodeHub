@@ -52,10 +52,14 @@ public class Main {
                       repositorioController.voltarVersao(args[1]);
                   }
                   case "--apagar" -> {
-                      versaoController.deletarVersao(args[1]);
+                    if (args[1].equals("-f")) repositorioController.deletaVersao(args[2]);
+                    else versaoController.deletarVersao(args[1]);
                   }
                   case "--container"->  {
                     repositorioController.listaArquivosDoContainer();
+                  }
+                  case "--restaurar"->  {
+                    versaoController.recuperarVersao();
                   }
               }
           } else {

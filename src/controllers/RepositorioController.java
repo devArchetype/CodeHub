@@ -187,7 +187,7 @@ public class RepositorioController {
         Vector arquivosProcessar = new Vector<>();
         
         //Caminho do arquivo atual que vai ser deletado
-        File diretorioPai = new File(this.repositorio.getPath()+"\\versoes\\"+versaoHash);
+        File diretorioPai = new File(this.repositorio.getPath() + Arquivo.resolvePath() + "versoes" + Arquivo.resolvePath() + versaoHash);
         while(diretorioPai.exists()){
         //add todos os diretorios da pasta raiz
         Collections.addAll(arquivosVerificar, diretorioPai.listFiles());

@@ -219,7 +219,7 @@ public class VersaoController {
         }
     }
 
-    public static void deleteDirectory(File file) {
+    private void deleteDirectory(File file) {
         for (File subArquivo : file.listFiles()) {
 
             if (subArquivo.isDirectory()) {
@@ -236,23 +236,44 @@ public class VersaoController {
 
         File lixeira = new File(getPastaLixeira().toString());
         // Destino da versao relativa a pasta lixeira
-        File destino = new File(lixeira + Arquivo.resolvePath() + hashVersao);
+        File destino = new File(lixeira.getAbsolutePath() + Arquivo.resolvePath() + hashVersao);
 
         try {
             if (origem.exists() && !destino.exists()) {
-
                 File[] versaoAntiga = lixeira.listFiles();
-                deleteDirectory(versaoAntiga[0]);
 
-                versaoAntiga[0].delete();
+                if (versaoAntiga != null && versaoAntiga.length > 0) {
+                  deleteDirectory(versaoAntiga[0]);
+                  versaoAntiga[0].delete();
+                }
 
                 // Files.move(source, target, options);
                 Files.move(origem.toPath(), destino.toPath());
             } else {
-                System.out.println("A versao informada nao existe");
+                System.out.println("A versao informada nao existe.");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.exit(0); 
         }
     }
+
+    public void recuperarVersao() {
+      //seleciona a pasta de backup
+      File[] filhosOrigem = getPastaLixeira().listFiles();
+      File versaoARecuperar = filhosOrigem[0];
+      //seleciona a pasta de restauracao do backup
+      File destino = new File(getPastaVersoes() + Arquivo.resolvePath() + versaoARecuperar.getName());
+
+      try {
+          //se existir um backup, restaura
+          if (versaoARecuperar.exists() && !destino.exists()) {
+            Files.move(versaoARecuperar.toPath(), destino.toPath());
+            System.out.println("Versao de hash " + versaoARecuperar.getName() + " restaurada.");
+          } else {
+            System.out.println("Não existe um backup da ultima versao removida.");
+          }
+      } catch (IOException e) {
+          System.exit(0);
+      }
+  }
 }
