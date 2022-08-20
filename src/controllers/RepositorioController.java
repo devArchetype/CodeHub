@@ -7,11 +7,12 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Vector;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.prefs.Preferences;
 
+import ferramentas.Cores;
 import models.Repositorio;
 import models.Usuario;
 import models.Versao;
@@ -129,8 +130,10 @@ public class RepositorioController {
             System.exit(0);
         }
 
+        //remove todo o conteudo do container caso a flag "." existir
         ArrayList<String> container = new ArrayList<>();
 
+        //remove o conteudo determinado do container
         if(!arquivoRemover.equals(".")) {
             //leitura do arquivo container.json, assim retornando um ArrayList<String> com todos os paths existentes nele
             container = Arquivo.leContainerJson(containerLeitura);
@@ -151,6 +154,26 @@ public class RepositorioController {
         Arquivo.escreveJson(arquivoContainerJson, container);
     }
 
+    //exibe todos os paths(arquivos) disponveis dentro do container
+    public void listaArquivosDoContainer () {
+        //seleciona o arquivo container.json e armazena em um objeto file criado
+        File arquivoContainerJson = new File(this.repositorio.getPath() +
+                Arquivo.resolvePath()  + "container" + Arquivo.resolvePath() + "container.json");
+
+        //objeto FileReader necessario para se fazer a leitura de um arquivo qualquer
+        FileReader containerLeitura = null;
+        try {
+            containerLeitura = new FileReader(arquivoContainerJson);
+        } catch (FileNotFoundException e) {
+            System.exit(0);
+        }
+
+        //armazena o container .json como um arraylist
+        ArrayList<String> container = Arquivo.leContainerJson(containerLeitura);
+
+        repositorioView.exibeArquivosContainer(container,this.repositorio.getPath());
+    }
+
     public void listarHistorico() {
         repositorioView.listarHistorico(this.repositorio);
     }
@@ -165,8 +188,7 @@ public class RepositorioController {
              System.out.println("A hash inserida não existe no banco");
              return;
          }
-      
-       
+
         VersaoController v = new VersaoController();
         
         //Talvez em um futuro salvar a versão atual do usuario para backup!:
@@ -215,8 +237,7 @@ public class RepositorioController {
                 }
             }
         }
-        
-        
+
         //Definimos a versão que voltara como a atual no banco de dados
         ver.setVersaoAtual(true);
         v.atualizaVersaoAtual();

@@ -3,6 +3,7 @@ package views;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
@@ -92,6 +93,49 @@ public class RepositorioView {
 
                 // Caso não sejam iguais, adiciona a versão ao final da fila
                 objetosVersoes.add(versao);
+            }
+        }
+    }
+
+    //montando a lista de path/arquivos dentro do repositorio container
+    public void exibeArquivosContainer (ArrayList<String> container,String path){
+        //verifica a existencia de itens no container e os exibe na tela
+        if (container == null || container.size() <= 0) {
+            System.out.println(Cores.getCor("vermelho") + "O container atual nao possui itens!");
+            return;
+        }
+
+        path = path.replace(".CodeHub","");
+
+        //impressao dos paths do container
+        System.out.println(Cores.getCor("amarelo") + "O container atual contem os seguintes itens: \n");
+
+        System.out.println(Cores.getCor("amarelo") + "[Arquivos]");
+
+        //percorre o array container que contem os paths de arquivos
+        for (int i = 0; i < container.size(); i++) {
+            String arquivoAtual = container.get(i);
+            File arquivo = new File(arquivoAtual);
+
+            //adiciona flag de arquivo ou diretorio em cada item do container
+            if(arquivo.isFile()){
+                arquivoAtual = arquivoAtual.replace(path,"");
+                System.out.println("\t" + Cores.getCor("verde") + arquivoAtual);
+            }
+        }
+
+        System.out.println(" ");
+        System.out.println(Cores.getCor("amarelo") + "[Diretorios]");
+
+        //percorre o array container que contem os paths de pastas/diretorios
+        for (int i = 0; i < container.size(); i++) {
+            String arquivoAtual = container.get(i);
+            File arquivo = new File(arquivoAtual);
+
+            //adiciona flag de arquivo ou diretorio em cada item do container
+            if(arquivo.isDirectory()) {
+                arquivoAtual = arquivoAtual.replace(path,"");
+                System.out.println("\t" + Cores.getCor("verde") + arquivoAtual);
             }
         }
     }
