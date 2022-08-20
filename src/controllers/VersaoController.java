@@ -226,12 +226,14 @@ public class VersaoController {
         File destino = new File(getPastaLixeira().toString() + Arquivo.resolvePath() + hashVersao);
 
         try {
-            if (origem.exists() && !destino.exists())
+            if (origem.exists() && !destino.exists()) {
                 // Files.move(source, target, options);
                 Files.move(origem.toPath(), destino.toPath());
+            } else {
+                System.out.println("A versao informada nao existe");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 }

@@ -45,16 +45,16 @@ public class Main {
                     case "--historico" -> {
                         repositorioController.listarHistorico();
                     }
-                    case "--registrar", "--acessar" ->  {
+                    case "--registrar", "--acessar" -> {
                         System.out.println("Usuario logado!");
                     }
-                    case "--voltar"->  {
+                    case "--voltar" -> {
                         repositorioController.voltarVersao(args[1]);
-                       
+
                     }
-                    case "--apagar"->  {
+                    case "--apagar" -> {
                         versaoController.deletarVersao(args[1]);
-                       
+
                     }
                 }
             } else {
