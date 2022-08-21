@@ -58,7 +58,7 @@ public class Main {
                         usuarioController.chamarAjuda();
                     }
                     case  "--registrar" -> {
-                        usuarioController.registraUsuario();
+                        usuarioController.registraUsuario(null);
                     }
                     case  "--acessar" -> {
                         usuarioController.acessaConta();

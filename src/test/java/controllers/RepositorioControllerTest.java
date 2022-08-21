@@ -29,4 +29,33 @@ class RepositorioControllerTest {
         assertTrue(repositorioController.adicionaAoContainer("."));
     }
 
+    //testes unitarios removeDoContainer
+    @Test
+    void removeDoContainerFalha() {
+        repositorioController.iniciaRepositorio();
+        repositorioController.adicionaAoContainer(".");
+        assertFalse(repositorioController.removeDoContainer("asd16@!#54df1"));
+
+    }
+
+    @Test
+    void removeDoContainerSucesso() {
+        repositorioController.iniciaRepositorio();
+        repositorioController.adicionaAoContainer(".");
+        assertTrue(repositorioController.removeDoContainer("."));
+    }
+
+    //testes unitarios listaArquivosDoContainer
+    @Test
+    void listaArquivosDoContainerVazio() {
+        repositorioController.iniciaRepositorio();
+        assertFalse(repositorioController.listaArquivosDoContainer());
+    }
+
+    @Test
+    void listaArquivosDoContainerCheio() {
+        repositorioController.iniciaRepositorio();
+        repositorioController.adicionaAoContainer(".");
+        assertTrue(repositorioController.listaArquivosDoContainer());
+    }
 }

@@ -27,4 +27,10 @@ class UsuarioControllerTest {
         assertFalse(usuarioController.registraUsuario(usuario));
     }
 
+    //teste unitario chamarAjuda (existe somente a possibilidade de sucesso ao exibir ajuda)
+    @Test
+    void chamarAjudaSucesso() {
+        assertTrue(usuarioController.chamarAjuda());
+    }
+
 }

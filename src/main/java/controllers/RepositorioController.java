@@ -125,7 +125,7 @@ public class RepositorioController {
         return true;
     }
 
-    public void removeDoContainer (String arquivoRemover) {
+    public boolean removeDoContainer (String arquivoRemover) {
         //seleciona o arquivo container.json e armazena em um objeto file criado
         File arquivoContainerJson = new File(this.repositorio.getPath() +
                 Arquivo.resolvePath()  + "container" + Arquivo.resolvePath() + "container.json");
@@ -141,6 +141,8 @@ public class RepositorioController {
         //remove todo o conteudo do container caso a flag "." existir
         ArrayList<String> container = new ArrayList<>();
 
+        boolean verificaExclusao = true;
+
         //remove o conteudo determinado do container
         if(!arquivoRemover.equals(".")) {
             //leitura do arquivo container.json, assim retornando um ArrayList<String> com todos os paths existentes nele
@@ -153,17 +155,22 @@ public class RepositorioController {
                 //remove o arquivo que foi solicitado
                 if (arquivoAtual.endsWith(arquivoRemover)){
                     container.remove(i);
+                    verificaExclusao = true;
                     break;
+                }
+                else{
+                    verificaExclusao = false;
                 }
             }
         }
 
         //reescreve o container com as devidas remocoes solicitadas pelo usuario
         Arquivo.escreveJson(arquivoContainerJson, container);
+        return verificaExclusao;
     }
 
     //exibe todos os paths(arquivos) disponveis dentro do container
-    public void listaArquivosDoContainer () {
+    public boolean listaArquivosDoContainer () {
         //seleciona o arquivo container.json e armazena em um objeto file criado
         File arquivoContainerJson = new File(this.repositorio.getPath() +
                 Arquivo.resolvePath()  + "container" + Arquivo.resolvePath() + "container.json");
@@ -179,7 +186,7 @@ public class RepositorioController {
         //armazena o container .json como um arraylist
         ArrayList<String> container = Arquivo.leContainerJson(containerLeitura);
 
-        repositorioView.exibeArquivosContainer(container,this.repositorio.getPath());
+        return repositorioView.exibeArquivosContainer(container,this.repositorio.getPath());
     }
 
     public void listarHistorico() {

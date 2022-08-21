@@ -4,7 +4,7 @@ import ferramentas.Cores;
 
 public class UsuarioView {
 
-    public void imprimirComandos() {
+    public boolean imprimirComandos() {
 
         // lista os comandos de ajuda
         System.out.println(Cores.getCor("amarelo") + "Precisa de ajuda? Podemos te ajudar! \n"
@@ -26,6 +26,8 @@ public class UsuarioView {
         System.out.println("--container : exibe o conteudo do container\n");
         System.out.println("--restaurar : restaura o backup salvo de uma versao removida\n");
         // - ultima
+
+        return true;
     }
 
 }

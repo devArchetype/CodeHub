@@ -98,8 +98,8 @@ public class UsuarioController {
 
     }
 
-    public void chamarAjuda() {
-        this.usuarioView.imprimirComandos();
+    public boolean chamarAjuda() {
+        return this.usuarioView.imprimirComandos();
     }
 
     // verificacao de login meramente criada pra testes, para ser usado no Main,

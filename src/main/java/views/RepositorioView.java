@@ -98,11 +98,11 @@ public class RepositorioView {
     }
 
     //montando a lista de path/arquivos dentro do repositorio container
-    public void exibeArquivosContainer (ArrayList<String> container,String path){
+    public boolean exibeArquivosContainer (ArrayList<String> container,String path){
         //verifica a existencia de itens no container e os exibe na tela
         if (container == null || container.size() <= 0) {
             System.out.println(Cores.getCor("vermelho") + "O container atual nao possui itens!");
-            return;
+            return false;
         }
 
         path = path.replace(".CodeHub","");
@@ -138,6 +138,7 @@ public class RepositorioView {
                 System.out.println("\t" + Cores.getCor("verde") + arquivoAtual);
             }
         }
+        return true;
     }
 
 }

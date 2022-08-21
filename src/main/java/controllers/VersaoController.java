@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 public class VersaoController {
+    public String _descricao;
+    public String hash_name;
     // atributos de classe
     private Repositorio repositorio = new Repositorio();
     private Versao versao;
