@@ -24,6 +24,10 @@ public class RepositorioController {
 
     private RepositorioView repositorioView;
 
+    public Repositorio getRepositorio() {
+        return repositorio;
+    }
+
     public RepositorioController() {
         this.repositorio = new Repositorio();
         this.repositorioView = new RepositorioView();
@@ -69,9 +73,9 @@ public class RepositorioController {
         }
     }
 
-    public void adicionaAoContainer(String arquivoAdicionar) {
+    public boolean adicionaAoContainer(String arquivoAdicionar) {
         //verificando se existe um repositorio '.CodeHub' iniciado
-        if (!new File(this.repositorio.getPath()).exists()) return;
+        if (!new File(this.repositorio.getPath()).exists()) return false;
 
         //selecionando o arquivo container.json
         File arquivoContainerJson = new File(this.repositorio.getPath() + Arquivo.resolvePath() +
@@ -118,6 +122,7 @@ public class RepositorioController {
 
         // escrevendo o objeto ArrayList<String> no container.json, agora com novos arquivos adicionados ou nao
         Arquivo.escreveJson(arquivoContainerJson, container);
+        return true;
     }
 
     public void removeDoContainer (String arquivoRemover) {
@@ -317,7 +322,7 @@ public class RepositorioController {
  
     }
 
-    public static void copiandoDiretorios(String origemDoArquivo, String destinoDoArquivo) throws IOException {
+    private static void copiandoDiretorios(String origemDoArquivo, String destinoDoArquivo) throws IOException {
         //Anda pela arvore copiando arquivo por arquivo e diretorio por diretorio
         //Documentação : https://www.baeldung.com/java-copy-directory
         Files.walk(Paths.get(origemDoArquivo))

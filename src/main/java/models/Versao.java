@@ -57,4 +57,9 @@ public class Versao {
     public boolean getValorAtual() {
         return this.versaoAtual;
     }
+
+    @Override
+    public String toString() {
+        return "{ " + this.getChavePrimaria() + "; " + this.comentario + "; }";
+    }
 }

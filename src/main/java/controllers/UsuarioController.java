@@ -17,19 +17,25 @@ public class UsuarioController {
         this.usuarioView = new UsuarioView();
     }
 
-    public void registraUsuario() {
-        String nomeUsuario = Validacao.entradaNome();
-        String email = Validacao.entradaEmail(false);
-        String senha = Validacao.entradaSenha(false);
+    public boolean registraUsuario(Usuario usuario) {
+        if (usuario == null) {
+            String nomeUsuario = Validacao.entradaNome();
+            String email = Validacao.entradaEmail(false);
+            String senha = Validacao.entradaSenha(false);
 
-        this.usuario.setNome(nomeUsuario);
-        this.usuario.setEmail(email);
-        this.usuario.setSenha(senha);
+            this.usuario.setNome(nomeUsuario);
+            this.usuario.setEmail(email);
+            this.usuario.setSenha(senha);
+
+            usuario = this.usuario;
+        }
 
         if (usuario.registraDados()) {
             System.out.println("\n" + Cores.getCor("verde") + "Conta cadastrada com sucesso!");
+            return true;
         } else {
             System.out.println("\n" + Cores.getCor("vermelho") + "Email ja cadastrado!");
+            return false;
         }
     }
 

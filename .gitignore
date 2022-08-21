@@ -6,10 +6,6 @@
 
 #intellij
 /out/
-*.idea
-*.iml
-*.xml
-*.MF
 
 # CodeHub
 .CodeHub

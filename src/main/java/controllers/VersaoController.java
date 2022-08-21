@@ -58,45 +58,39 @@ public class VersaoController {
     private void threadVersiona(String comentario) {
         // cria threads para executar as funções do versionar (não dm)
         String emailCookie = Preferences.userRoot().get("emailUser", "");
-        new Thread() {
-            @Override
-            public void run() {
-                // seleciona o repositorio onde o usuario chamou o método iniciar()
-                String hash = null;
-                try {
-                    hash = geraHashDaVersao();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                // acessa a pasta ou cria, se não existir:
-                if (!getPastaVersoes().exists())
-                    getPastaVersoes().mkdir();
-                // constroi objeto a ser inserido no banco de dados, no formato adequado. ****
-                // AINDA FALTA INSERIR O NOME,pois, não HÁ NO COOKIE
-                getVersao().setUsuario(emailCookie);
-                getVersao().setData(dataAtual());
-                getVersao().setVersao(hash);
-                getVersao().setComentario(comentario);
+        // seleciona o repositorio onde o usuario chamou o método iniciar()
+        String hash = null;
+        try {
+            hash = geraHashDaVersao();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // acessa a pasta ou cria, se não existir:
+        if (!getPastaVersoes().exists())
+            getPastaVersoes().mkdir();
+        // constroi objeto a ser inserido no banco de dados, no formato adequado. ****
+        // AINDA FALTA INSERIR O NOME,pois, não HÁ NO COOKIE
+        getVersao().setUsuario(emailCookie);
+        getVersao().setData(dataAtual());
+        getVersao().setVersao(hash);
+        getVersao().setComentario(comentario);
 
-                // Definindo versão como versão atual
-                getVersao().setVersaoAtual(true);
+        // Definindo versão como versão atual
+        getVersao().setVersaoAtual(true);
 
-                // Removendo atributo de versão atual da versão anterior(antes de salvar a nova
-                // versão no BD)
-                atualizaVersaoAtual();
+        // Removendo atributo de versão atual da versão anterior(antes de salvar a nova
+        // versão no BD)
+        atualizaVersaoAtual();
 
-                // cria copia dos arquivos do repositório para o destino:
-                if (criaCopiaArquivosRepositorio(hash)) {
-                    // salva versão no banco de dados.
-                    BancoDados.registraVersao(getVersao());
-                }
+        // cria copia dos arquivos do repositório para o destino:
+        if (criaCopiaArquivosRepositorio(hash)) {
+            // salva versão no banco de dados.
+            BancoDados.registraVersao(getVersao());
+        }
 
-                // limpa o container depois de versionar
-                RepositorioController repositorioController = new RepositorioController();
-                repositorioController.removeDoContainer(".");
-            }
-        }.start(); // executa thread, mesmo se a main travar ou for interrompida, será executado o
-                   // versionamento.
+        // limpa o container depois de versionar
+        RepositorioController repositorioController = new RepositorioController();
+        repositorioController.removeDoContainer(".");
     }
 
     private String geraHashDaVersao() throws NoSuchAlgorithmException {
@@ -257,9 +251,15 @@ public class VersaoController {
         }
     }
 
-    public void recuperarVersao() {
+    public boolean recuperarVersao() {
       //seleciona a pasta de backup
       File[] filhosOrigem = getPastaLixeira().listFiles();
+
+      if (filhosOrigem == null || filhosOrigem.length <= 0) {
+          System.out.println("Não existe um backup da ultima versao removida.");
+          return false;
+      }
+
       File versaoARecuperar = filhosOrigem[0];
       //seleciona a pasta de restauracao do backup
       File destino = new File(getPastaVersoes() + Arquivo.resolvePath() + versaoARecuperar.getName());
@@ -269,11 +269,13 @@ public class VersaoController {
           if (versaoARecuperar.exists() && !destino.exists()) {
             Files.move(versaoARecuperar.toPath(), destino.toPath());
             System.out.println("Versao de hash " + versaoARecuperar.getName() + " restaurada.");
+            return true;
           } else {
             System.out.println("Não existe um backup da ultima versao removida.");
+            return false;
           }
       } catch (IOException e) {
-          System.exit(0);
+          return false;
       }
-  }
+    }
 }
