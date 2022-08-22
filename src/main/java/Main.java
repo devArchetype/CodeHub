@@ -1,6 +1,7 @@
 import controllers.RepositorioController;
 import controllers.UsuarioController;
 import controllers.VersaoController;
+import ferramentas.Cores;
 import network.UpDados;
 
 /**
@@ -30,27 +31,46 @@ public class Main {
             //verificacao de login meramente criada pra testes
             if (usuarioController.estaLogado()) {
                 switch (args[0]) {
-                    case "--ajudar" ->  {
-                        usuarioController.chamarAjuda();
-                    }
-                    case  "--sair" -> {
-                        usuarioController.sairConta();
-                    }
-                    case  "--iniciar" -> {
-                        repositorioController.iniciaRepositorio();
-                    }
-                    case  "--adicionar" -> {
-                        repositorioController.adicionaAoContainer(args[1]);
-                    }
-                    case "--registrar", "--acessar" ->  {
-                        System.out.println("Usuario logado!");
-                    }
-                    case "--versionar" -> {
-                        versao.versiona(args[1]);
-                    }
-                    case "--enviar" -> {
-                        enviar.enviarParaGitHub();
-                    }
+                   case "--ajudar" -> {
+                      usuarioController.chamarAjuda();
+                  }
+                  case "--sair" -> {
+                      usuarioController.sairConta();
+                  }
+                  case "--iniciar" -> {
+                      repositorioController.iniciaRepositorio();
+                  }
+                  case "--adicionar" -> {
+                      repositorioController.adicionaAoContainer(args[1]);
+                  }
+                  case "--remover" -> {
+                      repositorioController.removeDoContainer(args[1]);
+                  }
+                  case "--versionar" -> {
+                      versaoController.versiona(args[1]);
+                  }
+                  case "--historico" -> {
+                      repositorioController.listarHistorico();
+                  }
+                  case "--registrar", "--acessar" -> {
+                      System.out.println("Usuario logado!");
+                  }
+                  case "--voltar" -> {
+                      repositorioController.voltarVersao(args[1]);
+                  }
+                  case "--apagar" -> {
+                    if (args[1].equals("-f")) repositorioController.deletaVersao(args[2]);
+                    else versaoController.deletarVersao(args[1]);
+                  }
+                  case "--container"->  {
+                    repositorioController.listaArquivosDoContainer();
+                  }
+                  case "--restaurar"->  {
+                    versaoController.recuperarVersao();
+                  }
+                  case "--enviar" -> {
+                    enviar.enviarParaGitHub();
+                  }
                 }
             } else {
                 switch (args[0]) {
