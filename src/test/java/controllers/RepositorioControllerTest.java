@@ -16,6 +16,7 @@ class RepositorioControllerTest {
         repositorioController = new RepositorioController();
     }
 
+    //testes unitarios adicionaAoContainer
     @Test
     void adicionaAoContainerFalha() {
         File repo = new File(repositorioController.getRepositorio().getPath());
@@ -35,7 +36,6 @@ class RepositorioControllerTest {
         repositorioController.iniciaRepositorio();
         repositorioController.adicionaAoContainer(".");
         assertFalse(repositorioController.removeDoContainer("asd16@!#54df1"));
-
     }
 
     @Test

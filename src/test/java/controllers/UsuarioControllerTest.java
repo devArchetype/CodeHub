@@ -14,6 +14,7 @@ class UsuarioControllerTest {
         usuarioController = new UsuarioController();
     }
 
+    //testes unitarios registraUsuario
     @Test
     void registraUsuarioSucesso() {
         Usuario usuario = new Usuario("BoB", "batata123@gmail.com", "PaoDeBatata");
@@ -22,7 +23,7 @@ class UsuarioControllerTest {
 
     @Test
     void registraUsuarioFalha() {
-        Usuario usuario = new Usuario("BoB", "batata123@gmail.com", "PaoDeBatata");
+        Usuario usuario = new Usuario("BobEsponja", "batata1236@gmail.com", "HamburguerDeSiri");
         usuarioController.registraUsuario(usuario);
         assertFalse(usuarioController.registraUsuario(usuario));
     }
