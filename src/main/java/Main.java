@@ -81,7 +81,7 @@ public class Main {
                         usuarioController.registraUsuario(null);
                     }
                     case  "--acessar" -> {
-                        usuarioController.acessaConta();
+                        usuarioController.acessaConta(null);
                     }
                     default -> {
                         System.out.println("Faca login antes de continuar!");

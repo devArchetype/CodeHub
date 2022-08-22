@@ -39,7 +39,7 @@ public class UsuarioController {
         }
     }
 
-    public void acessaConta() {
+    public boolean acessaConta(Usuario usuario) {
         // Verifica se ele estava logado antes com cookies
         // Se estiver vazio é a primeira vez depois de um tempo no sistema, então
         // continua o código
@@ -55,22 +55,30 @@ public class UsuarioController {
                 // Algo deu errado, limpando o cookie e pedindo para acessa denovo
                 Preferences.userRoot().put("emailUser", "");
                 Preferences.userRoot().put("passUser", "");
-                acessaConta();
+                acessaConta(null);
+                return true;
             }
         } else {
-            String email = Validacao.entradaEmail(true);
-            String senha = Validacao.entradaSenha(true);
+            if(usuario == null){
+                String email = Validacao.entradaEmail(true);
+                String senha = Validacao.entradaSenha(true);
 
-            // Verificação se a o usuario existe e se a senha bate
-            this.usuario.setEmail(email);
-            this.usuario.setSenha(senha);
+                // Verificação se a o usuario existe e se a senha bate
+                this.usuario.setEmail(email);
+                this.usuario.setSenha(senha);
+
+                usuario = this.usuario;
+            }
 
             if (usuario.validarAcesso()) {
                 System.out.println(Cores.getCor("verde") + "Email e senha corretos, bem-vindo ao CodeHub");
+                return true;
             } else {
                 System.out.println(Cores.getCor("vermelho") + "Email ou senha incorretos, tente novamente");
+                return false;
             }
         }
+        return false;
     }
 
     public void sairConta() {

@@ -31,7 +31,8 @@ public class UpDados {
         static final private Runtime run = Runtime.getRuntime();
         static private Process pro;
         static private BufferedReader read;
-        private Versao versao;
+    public String resp;
+    private Versao versao;
         private String descricao = new VersaoController()._descricao;
 
         // método get

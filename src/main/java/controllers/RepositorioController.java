@@ -33,7 +33,7 @@ public class RepositorioController {
         this.repositorioView = new RepositorioView();
     }
 
-    public void iniciaRepositorio() {
+    public boolean iniciaRepositorio() {
         // pegando as credenciais do usuario logado
         String emailCookie = Preferences.userRoot().get("emailUser", "");
         Usuario cookieUser = BancoDados.consultaUsuario(emailCookie);
@@ -65,12 +65,14 @@ public class RepositorioController {
                 this.repositorio.registraDados();
 
                 System.out.println("CodeHub inicializado com sucesso!");
-            } else {
-                System.out.println("O CodeHub ja foi inicializado!");
+                return true;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.exit(0);
         }
+
+        System.out.println("O CodeHub ja foi inicializado!");
+        return false;
     }
 
     public boolean adicionaAoContainer(String arquivoAdicionar) {

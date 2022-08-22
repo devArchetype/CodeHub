@@ -2,9 +2,6 @@
   <artifact type="jar" name="CodeHub:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/CodeHub_jar</output-path>
     <root id="archive" name="CodeHub.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/out/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="CodeHub" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/gson-2.9.0.jar" path-in-jar="/" />
     </root>
