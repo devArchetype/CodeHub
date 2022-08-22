@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RepositorioControllerTest {
 
     private static RepositorioController repositorioController;
-
+     private static VersaoController versaoController;
     @BeforeAll
     public static void init() {
         repositorioController = new RepositorioController();
@@ -57,5 +57,19 @@ class RepositorioControllerTest {
         repositorioController.iniciaRepositorio();
         repositorioController.adicionaAoContainer(".");
         assertTrue(repositorioController.listaArquivosDoContainer());
+    }
+    @Test
+    void removerversaoSucesso() {
+        repositorioController.iniciaRepositorio();
+        repositorioController.adicionaAoContainer(".");
+        versaoController.versiona("Comentario");
+        assertTrue(repositorioController.deletaVersao(versaoController.getVersao().getChavePrimaria()));
+    }
+    @Test
+    void removerversaoFalha() {
+        repositorioController.iniciaRepositorio();
+        repositorioController.adicionaAoContainer(".");
+        versaoController.versiona("Comentario");
+        assertFalse(repositorioController.deletaVersao("83");
     }
 }
