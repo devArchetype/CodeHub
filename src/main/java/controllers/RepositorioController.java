@@ -192,7 +192,7 @@ public class RepositorioController {
     public void listarHistorico() {
         repositorioView.listarHistorico(this.repositorio);
     }
-    public void deletaVersao(String versaoHash){
+    public boolean deletaVersao(String versaoHash){
         
       // Vetores usados para saber quais arquivos deletar e quais não deletar
         Vector arquivosVerificar = new Vector<>();
@@ -200,6 +200,10 @@ public class RepositorioController {
         
         //Caminho do arquivo atual que vai ser deletado
         File diretorioPai = new File(this.repositorio.getPath() + Arquivo.resolvePath() + "versoes" + Arquivo.resolvePath() + versaoHash);
+        if(!diretorioPai.exists()){
+            System.out.println("Essa versão não existe");
+            return false;
+        }
         while(diretorioPai.exists()){
         //add todos os diretorios da pasta raiz
         Collections.addAll(arquivosVerificar, diretorioPai.listFiles());
@@ -235,6 +239,7 @@ public class RepositorioController {
             //Deleta a pasta pai
            diretorioPai.delete();
         }
+        return true;
     }
      /*
     * Função responsavel por voltar versões anteriores
