@@ -24,7 +24,7 @@ public class Main {
         //controllers
         UsuarioController usuarioController = new UsuarioController();
         RepositorioController repositorioController = new RepositorioController();
-        VersaoController versao = new VersaoController();
+        VersaoController versaoController = new VersaoController();
         UpDados enviar = new UpDados();
         //central de operacoes
         try {

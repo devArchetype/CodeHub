@@ -14,6 +14,7 @@ class RepositorioControllerTest {
     @BeforeAll
     public static void init() {
         repositorioController = new RepositorioController();
+        versaoController = new VersaoController();
     }
 
     //testes unitarios adicionaAoContainer
@@ -70,6 +71,6 @@ class RepositorioControllerTest {
         repositorioController.iniciaRepositorio();
         repositorioController.adicionaAoContainer(".");
         versaoController.versiona("Comentario");
-        assertFalse(repositorioController.deletaVersao("83");
+        assertFalse(repositorioController.deletaVersao("83"));
     }
 }
